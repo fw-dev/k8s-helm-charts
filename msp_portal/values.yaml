@@ -1,0 +1,142 @@
+elasticsearch:
+  enabled: false
+  image:
+    repository: "docker.elastic.co/elasticsearch/elasticsearch"
+  cluster:
+    xpackEnable: true
+    env:
+      XPACK_MONITORING_ENABLED: true
+      XPACK_SECURITY_ENABLED: true
+
+
+kibana:
+  enabled: false
+  replicaCount: 2
+
+  image:
+    repository: "docker.elastic.co/kibana/kibana"
+    tag: "6.6.0"
+    pullPolicy: "IfNotPresent"
+
+  service:
+    type: NodePort
+    externalPort: 5601
+
+  livenessProbe:
+    enabled: true
+    httpGet:
+      path: /kibana/api/status
+      port: 5601
+    initialDelaySeconds: 100
+    timeoutSeconds: 10
+
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: /kibana/api/status
+      port: 5601
+    initialDelaySeconds: 100
+    periodSeconds: 60
+    timeoutSeconds: 60
+    failureThreshold: 10
+    successThreshold: 1
+
+  env:
+    ELASTICSEARCH_URL: http://elk-elasticsearch-client.default.svc.cluster.local:9200
+    SERVER_BASEPATH: "/kibana"
+    SERVER_REWRITEBASEPATH: true
+
+
+logstash:
+  replicaCount: 2
+  
+  image:
+    repository: "docker.elastic.co/logstash/logstash"
+  
+  service:
+    type: NodePort
+    ports:
+      http:
+        port: 8080
+        targetPort: http
+        protocol: TCP
+  env:
+    XPACK_MONITORING_ENABLED: true
+    XPACK_MONITORING_ELASTICSEARCH_URL: "https://ad6d8f3550a04c20bd2ef659ac22a497.europe-west3.gcp.cloud.es.io"
+
+  livenessProbe:
+    httpGet:
+      path: /
+      port: monitor
+    initialDelaySeconds: 100
+    periodSeconds: 60
+    timeoutSeconds: 60
+    failureThreshold: 10
+    successThreshold: 1
+
+  readinessProbe:
+    httpGet:
+      path: /
+      port: monitor
+    initialDelaySeconds: 100
+    periodSeconds: 60
+    timeoutSeconds: 60
+    failureThreshold: 10
+    successThreshold: 1
+  
+  ports:
+    - name: http
+      containerPort: 8080
+      protocol: TCP
+  elasticsearch:
+    host: "https://ad6d8f3550a04c20bd2ef659ac22a497.europe-west3.gcp.cloud.es.io"
+    port: 9243
+  inputs:
+    main: |-
+      input {
+        http {
+          port => 8080
+          codec => "json"
+        }
+      }
+  outputs:
+    main: |-
+      output {
+        elasticsearch {
+          hosts => ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+          ssl => true
+          user => "elastic"
+          password => "<<ELASTICSEARCH PASSWORD>>" ## UPDATE PASSWORD
+          manage_template => false
+          index => "msp_portal_analytics_1"
+        }
+      }
+  filters:
+    main: |-
+      filter {
+        if ![version] {
+          drop { }
+        }
+
+        if ![revision] {
+          drop { }
+        }
+
+        if ![servers] {
+          drop { }
+        }
+
+        #########
+        # Geoip #
+        #########
+
+        # Extract the source IP from X-Forwarded-For header
+        mutate {
+          add_field => { "_client_ip" => "%{[headers][x_forwarded_for]}" }
+        }
+        mutate { split => { "_client_ip" => "," } }
+        geoip { source => "_client_ip" }
+
+        mutate { remove_field => "_client_ip" }
+      }
+
