@@ -1,0 +1,87 @@
+{{- range .Values.servers }}
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: fwserver-{{ .name }}
+  labels:
+    app: fwserver-{{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fwserver-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: fwserver-{{ .name }}
+    spec:
+      containers:
+      - name: mdm-server
+        image: filewave/fwserver-k8s:14.0.0
+        env:
+          - name: FW_VNC_RELAY_PORT
+            value: "{{ .port_prefix }}10"
+        volumeMounts:
+          - mountPath: "/fwxserver/DB"
+            name: ssd-vol-{{ .name }}
+            subPath: db
+          - mountPath: "/fwxserver/Data Folder"
+            name: standard-vol-{{ .name }}
+            subPath: data-folder
+          - mountPath: "/usr/local/filewave/apache/conf"
+            name: standard-vol-{{ .name }}
+            subPath: apache-conf 
+          - mountPath: "/usr/local/filewave/apache/logs"
+            name: standard-vol-{{ .name }}
+            subPath: apache-logs 
+          - mountPath: "/usr/local/filewave/postgresql/conf"
+            name: standard-vol-{{ .name }}
+            subPath: postgres-conf
+          - mountPath: "/usr/local/filewave/postgresql/log"
+            name: standard-vol-{{ .name }}
+            subPath: postgres-log
+          - mountPath: "/usr/local/filewave/certs"
+            name: standard-vol-{{ .name }}
+            subPath: certs
+          - mountPath: "/usr/local/filewave/fwcld"
+            name: standard-vol-{{ .name }}
+            subPath: fwcld
+          - mountPath: "/usr/local/filewave/ipa"
+            name: standard-vol-{{ .name }}
+            subPath: ipa
+          - mountPath: "/usr/local/filewave/log"
+            name: standard-vol-{{ .name }}
+            subPath: log
+          - mountPath: "/usr/local/filewave/media"
+            name: standard-vol-{{ .name }}
+            subPath: media
+          - mountPath: "/usr/local/filewave/tmp"
+            name: standard-vol-{{ .name }}
+            subPath: tmp
+          - mountPath: "/usr/local/filewave/scripts"
+            name: standard-vol-{{ .name }}
+            subPath: scripts
+
+        ports:
+        - containerPort: 443
+        - containerPort: 20005
+        - containerPort: 20006
+        - containerPort: 20015
+        - containerPort: 20016
+        - containerPort: 20017        
+        - containerPort: {{ .port_prefix }}10 
+        - containerPort: 20443
+        - containerPort: 20445
+        - containerPort: 20446
+        
+      volumes:
+      - name: standard-vol-{{ .name }}
+        persistentVolumeClaim:
+          claimName: fwserver-standard-{{ .name }}
+      - name: ssd-vol-{{ .name }}
+        persistentVolumeClaim:
+          claimName: fwserver-ssd-{{ .name }}
+      imagePullSecrets:
+        - name: regcred
+{{- end}}

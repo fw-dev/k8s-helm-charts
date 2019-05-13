@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: default-cert
+data:
+  tls.crt: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURmVENDQW1XZ0F3SUJBZ0lVY05ZYkJqL05kQ1pHVzB3YWJhTGJZNlVpYnNZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1RqRUxNQWtHQTFVRUJoTUNXRmd4Q3pBSkJnTlZCQWdNQWxoWU1Rc3dDUVlEVlFRSERBSllXREVMTUFrRwpBMVVFQ2d3Q1dGZ3hDekFKQmdOVkJBc01BbGhZTVFzd0NRWURWUVFEREFKWVdEQWVGdzB4T1RBMU1EZ3dPVEk0Ck1UaGFGdzB5TURBMU1EY3dPVEk0TVRoYU1FNHhDekFKQmdOVkJBWVRBbGhZTVFzd0NRWURWUVFJREFKWVdERUwKTUFrR0ExVUVCd3dDV0ZneEN6QUpCZ05WQkFvTUFsaFlNUXN3Q1FZRFZRUUxEQUpZV0RFTE1Ba0dBMVVFQXd3QwpXRmd3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRRDJQOWhzSDRiTytteWJVaGFwCjhQbEpwOS9xSFBMeUhoUDIyanlDRGFCUmVFblZKNGRUQU9wTnZDaWE2VGM0ekVaS1Vtb3h6bm81dFhkSnFTR2kKTy9pbDJ6L0tLZzVtWHl6WlIyVGNhSU9VYWJxeFgxUXpOS0VkNVpKYk9qV2t2RWZzUDc2dGZZS3hwdEFEQThUMQo0eDYyaCtFU2xvR2dQS0t0R3JCZjd2TTEwZjhwUjQxdWZIVFRoK09uTWdtNEplbFQrTTVKRzRZbmRiN21EUG1VCkpXUkxtL2l6UkVhMXB6VUswcnp1Y3BSQmRiU0QzaWJJbGs0Yll2Nyt5STZIUkdINU45cWE5c21UZHduTzVrV2QKeWt5WGplcGVMMUNVaTF4T0Jtc3BpSS83SVliRG44WXk4WVBVV0VRWWVBYVNWTDFDVW5iZ243QzVJbUZkTVBKcAphaDVyQWdNQkFBR2pVekJSTUIwR0ExVWREZ1FXQkJUTURLcEV2Y3RKZmQvTkhkSnhIRDhMd3phbXp6QWZCZ05WCkhTTUVHREFXZ0JUTURLcEV2Y3RKZmQvTkhkSnhIRDhMd3phbXp6QVBCZ05WSFJNQkFmOEVCVEFEQVFIL01BMEcKQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUEwUWpWYXZIMTZMaDh2a3lRcXVDREt3OGw4MjJLL3gzdG5JVmJ6VE01QwpHTktkKyt4RVdRNWVqeVJLc3VLb0JTa2U5SEt1WEYvc1ZJRzBZTVJkMXVQaDVMcTVTTVFLbkV0UWczTlEzdW5sCkVzU0ZNZnVwSmNQdnRJV1RNMUErcFdSV29NUXg1b3RMczFBK0VmaWxqR3FZSVZ5bThxZ2pqS3VDMjlmcjFtSHUKQlRJQ1FjU2kwNHpETi9rZ2MzNDhiZ1BuOFlGbmovbGtDTTQ0U0FNVVd0OEdLTmJnQ2xaVlIyYStGTTJMT040eApwYzFtdFZMTHdQRjRlSGlYSWNrSzk3amxocHo3NUxTYXh5ZDYxd2JxaTZ6ZGNSbU9zOUhMMXZXeEJMM1hjMUZLCndxeCtmYW5LNmlYVHRoelFLTmo3REtkSzdCVGszd0RUckJ6RlM0ZHk4RWlJCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+  tls.key: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2QUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktZd2dnU2lBZ0VBQW9JQkFRRDJQOWhzSDRiTytteWIKVWhhcDhQbEpwOS9xSFBMeUhoUDIyanlDRGFCUmVFblZKNGRUQU9wTnZDaWE2VGM0ekVaS1Vtb3h6bm81dFhkSgpxU0dpTy9pbDJ6L0tLZzVtWHl6WlIyVGNhSU9VYWJxeFgxUXpOS0VkNVpKYk9qV2t2RWZzUDc2dGZZS3hwdEFECkE4VDE0eDYyaCtFU2xvR2dQS0t0R3JCZjd2TTEwZjhwUjQxdWZIVFRoK09uTWdtNEplbFQrTTVKRzRZbmRiN20KRFBtVUpXUkxtL2l6UkVhMXB6VUswcnp1Y3BSQmRiU0QzaWJJbGs0Yll2Nyt5STZIUkdINU45cWE5c21UZHduTwo1a1dkeWt5WGplcGVMMUNVaTF4T0Jtc3BpSS83SVliRG44WXk4WVBVV0VRWWVBYVNWTDFDVW5iZ243QzVJbUZkCk1QSnBhaDVyQWdNQkFBRUNnZ0VBSjhlYWs2VG9KeW1IUC9RYjJ5b2xhME9tUlhDVndvMGZWb0pjd2ZtbmkyR3UKTTdQbUJYK2hXaHRxUjlRaTZwYjlSK1pXWjJOZWxWSCtTalQ3VFBUNUx2bmpMU3BzRnhlSzdESy9WV2ZBMGNuZQpzZWFmZUlJcEFPWmtKVDZiQ2Rpc21icVdkL3BOa1p0TUFTQ3J3YmtGN2lDM09FUjkvait0Vzk5eTNKeUNSNUFxCjBYUVozYkdtcmU4ZU1DRGsvRU9PNHZ0K0NZTWt0Tm9SUmoyQXN5OXhlSlgvMDRKTHo1MEN6cE5uM3ZlUzd4VlIKUytuYy9sVnY1UXkySXlEVGJ2QUxJWkpGOTlzQ0drcFlZQmRVWEc4cFVPWVR4Y0FDTkFSak1penFCOVQxWVo5cgo2MFprSFNLdUxaWE5zeEVHeWRtQStyNFVTN2liMXFySVN0OHlBUGpCZVFLQmdRRC9SUmZUeEZlVmtTZUdLN2N5CkU4b1o2akJON0t4V2RZUEtUdVVId2UvbzR3dmdMQmRUVXEwT0kyODREWC9Vc0ZTN0RaVDRrYTJ5cEwzT05YaTEKOU1iNlMrSEVsVkYyVTZtOHFibDNGTVpMUTdkMGdlN1cxK3doeFRNazNjMUFnVm5BSVVEY3YrdDA2SmxHYVRrNwp5U05kWEZLNmtNOFNzREg1RjM4aXdZN2ovUUtCZ1FEMjlDWEhnRG4vTmo0Zld6N0FOUXJOTXlBNmFBK1NLSnJVClpnejE1QmxlUzFkaDRUSnVsc2E3M2NpdURKdU9Nc3RSVGZrU2pBL3hqdzJTM2VQMmR4VHJRTWVnQklLSHd5UGcKUDlwMS9kZjZkWEJ6VFNnSHMxS0Z5NGx5UFBVbE1hZUhzeEp4aG1XMWl2LzdSUWJMR202L3hML05HUktGSlhzNgpwdDFXMkdxMGh3S0JnSDdMcWhjMU9xLy9SdHVkVVVUZGtaQ253OUNoRThWcVg4a1l3U2pHUzAycG9aZDdMeWJqCk5UU0ZvMVA3V0ppajhhSnNENmdjYkdRRThvYkFCcktTNEZjcFkvNUtrUWt1YTJ4Yi9kVEppK21NdkU1eHo5b0YKckxQbGlRN3g0V2IrR1QrWEJPbmhwcW9PY3p3SFBqZVZKQ3pXay8wNXVyRzB0VTNlUHZkYm40ZGRBb0dBTUZDNApDMzRrMnErc0c4cG9Ub2FTSkc5NlFMTVhTTXMwNzVVL3QrUDJxcUltNkhsOHVuSTVVNHdpdFJxMlhHM0hwWktSCnhuVXNzV0FCa2RoanYxYXcrdzNqZ0lVaFhKcHJMSGFSc1VBR3YzTzJtbmhmK3BHMDlZUkswZFRuU1cyYmowc1QKc3E1T3UrUUVEUThHTXpwcXJJNDcwRTYxZHVOTVpyODYwc0RvcjRVQ2dZQUFyWDdxOWZndWFZeHZpQUFmMTNWaQo5TS9BM1Z3U3NPSHViY2NFZ3J1YjVEdlBtQkdDMmswR0hnNXR5U0c3UDFqckhudzlxU0p0aUh0QjM4RWhSaTBQCm56RzNGenM1anJZRzBhUG5YWGhyU0paYi84UTdyRVVMeU01cTV0b2ZZYWFDNGdKQkR2VTU4NjJQdERxaWxDY2IKdVV6SlpGNGtiNVlUeXNXekRlN1dJQT09Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K" 
+---
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    ingress.appscode.com/type: HostPort
+spec:
+  tls:
+  - secretName: default-cert
+    hosts:
+    {{- range .Values.servers }}
+      - {{ .host }}
+    {{- end }} 
+  rules:
+{{- range .Values.servers }}
+  - host: {{ .host }}
+    http:
+      port: 443
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: fw-web
+  - host: {{ .host }}
+    http:
+      port: 20443
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: mdm
+  - host: {{ .host }}
+    http:
+      port: 20445
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: django
+  - host: {{ .host }}
+    http:
+      port: 20446
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: noidea
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}2
+      noTLS: true
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: port20005
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}3
+      noTLS: true
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: port2006
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}4
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: fwxserver-a
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}5
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: fwserver-ssl
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}1
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: booster
+  
+{{- end }}

@@ -1,0 +1,7 @@
+description: FileWave MDM Server
+maintainers:
+- name: John Clayton
+- name: Matteo Ruello
+- name: Grzegorz Piekarski
+name: fwserver
+version: 1.0.0

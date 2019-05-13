@@ -1,0 +1,33 @@
+{{- range .Values.servers }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fwserver-standard-{{ .name }}
+  labels:
+    env: prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: standard
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fwserver-ssd-{{ .name }}
+  labels:
+    env: prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: standard
+{{- end}}
