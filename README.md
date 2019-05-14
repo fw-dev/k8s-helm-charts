@@ -9,11 +9,16 @@ NGINX ingress does not satisfy all the needs of FileWave regarding Port Forwardi
 
 In order to install it, please refer to: https://github.com/appscode/voyager/blob/master/docs/setup/install.md (make sure you select the correct version for your k8s environemnt).
 
+### Ensure Helm is correctly installed & configured
+If you are using Rancher then [follow their instructions here | https://rancher.com/docs/rancher/v2.x/en/installation/ha/helm-init/]
+
 ### Create TLS secret in Kubernetes
 FileWave uses encrypted connections and it requires a certificate on its LoadBalancer. Please proceed as following to generate a correct secret in kubernetes.
 
 ```bash
-kubectl create secret tls default-cert --key ${KEY_FILE} --cert ${CERT_FILE}
+export KEY_FILE=...
+export CERT_FILE=...
+./create-keycert-secret.sh
 ```
 
 ### Create secret for pulling docker images

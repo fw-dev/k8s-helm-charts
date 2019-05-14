@@ -1,4 +1,5 @@
 ---
+storageClassName: standard
 servers:
   - name: one # internal name in the cluster
     host: "one" # FQDN, used by the proxy to redirect
