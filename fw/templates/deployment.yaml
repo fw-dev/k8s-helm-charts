@@ -25,12 +25,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command:
-                - "cat"
-                - "17.0.0.1"
-                - "{{ .host }}"
-                - ">"
-                - "/etc/hosts"
+              command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .host }} >> /etc/hosts"]
         env:
           - name: FW_VNC_RELAY_PORT
             value: "{{ .port_prefix }}10"
