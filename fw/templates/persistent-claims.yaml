@@ -1,3 +1,4 @@
+{{- $storage := .Values.storageClassName }}
 {{- range .Values.servers }}
 ---
 kind: PersistentVolumeClaim
@@ -13,7 +14,7 @@ spec:
   resources:
     requests:
       storage: 500Mi
-  storageClassName: standard
+  storageClassName: {{ $storage }}
 
 ---
 kind: PersistentVolumeClaim
@@ -29,5 +30,5 @@ spec:
   resources:
     requests:
       storage: 500Mi
-  storageClassName: standard
+  storageClassName: {{ $storage }}
 {{- end}}
