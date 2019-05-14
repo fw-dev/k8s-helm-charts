@@ -20,5 +20,5 @@ kubectl create secret tls default-cert --key ${KEY_FILE} --cert ${CERT_FILE}
 FileWave repos in dockerHub are private, you will need to create a secret in order for your cluster to correctly pull them. Pleae proceed as following to generate a correct secret in kubernetes.
 
 ```bash
-create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=${DOCKER_USER}--docker-password=${DOCKER_PWD}  --docker-email=${DOCKER_EMAIL}
+kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=${DOCKER_USER}--docker-password=${DOCKER_PWD}  --docker-email=${DOCKER_EMAIL}
 ```
