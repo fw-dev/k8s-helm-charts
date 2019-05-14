@@ -1,7 +1,7 @@
-description: FileWave MDM Server
+description: FileWave MDM Servers Infrastructure Load Balanced
 maintainers:
 - name: John Clayton
 - name: Matteo Ruello
 - name: Grzegorz Piekarski
 name: fw
-version: 1.0.0
+version: 1.0.1

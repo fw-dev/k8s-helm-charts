@@ -1,7 +1,18 @@
 apiVersion: v1
 entries:
   fw:
-  - created: 2019-05-13T15:01:10.3758061+02:00
+  - created: 2019-05-14T09:39:39.093926+02:00
+    description: FileWave MDM Servers Infrastructure Load Balanced
+    digest: 4629263786b52003abae131d68b490ce89ae680e4a61f3446ee75f7b19a6fda3
+    maintainers:
+    - name: John Clayton
+    - name: Matteo Ruello
+    - name: Grzegorz Piekarski
+    name: fw
+    urls:
+    - https://github.com/fw-dev/k8s-helm-charts/fw-1.0.1.tgz
+    version: 1.0.1
+  - created: 2019-05-14T09:39:39.088135+02:00
     description: FileWave MDM Server
     digest: abc2980a6177650f651026f3def8ca2dea3dfacbddc52e4864f9103f0c4af860
     maintainers:
@@ -12,4 +23,4 @@ entries:
     urls:
     - https://github.com/fw-dev/k8s-helm-charts/fw-1.0.0.tgz
     version: 1.0.0
-generated: 2019-05-13T15:01:10.3748064+02:00
+generated: 2019-05-14T09:39:39.085511+02:00
