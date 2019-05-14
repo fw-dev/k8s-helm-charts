@@ -13,7 +13,7 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 500Mi
+      storage: {{ .storageSpaceGi }}Gi
   storageClassName: {{ $storage }}
 
 ---
@@ -29,6 +29,6 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 500Mi
+      storage: {{ .storageSpaceGi }}Gi
   storageClassName: {{ $storage }}
 {{- end}}
