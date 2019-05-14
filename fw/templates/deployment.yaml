@@ -22,6 +22,15 @@ spec:
       containers:
       - name: mdm-server
         image: filewave/fwserver:{{ .version }}
+        lifecycle:
+        postStart:
+          exec:
+            command:
+              - "cat"
+              - "17.0.0.1"
+              - "{{ .host }}"
+              - ">"
+              - "/etc/hosts"
         env:
           - name: FW_VNC_RELAY_PORT
             value: "{{ .port_prefix }}10"
