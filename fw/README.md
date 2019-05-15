@@ -9,7 +9,9 @@ NGINX ingress does not satisfy all the needs of FileWave regarding Port Forwardi
 
 In order to install it, please refer to: https://github.com/appscode/voyager/blob/master/docs/setup/install.md (make sure you select the correct version for your k8s environemnt).
 
-### Create TLS secret in Kubernetes
+### Create TLS secret in Kubernetes (DO NOT SKIP THIS STEP)
+Don't skip this - if you do then your Voyager LB will not work at all.  You have been warned. 
+
 FileWave uses encrypted connections and it requires a certificate on its LoadBalancer. Please proceed as following to generate a correct secret in kubernetes.
 
 ```bash

@@ -7,15 +7,4 @@ servers:
     version: "14.0.0" # Specify the version of FileWave
     memoryGi: 4 # RAM size in GB
     storageSpaceGi: 2 # Disk Space in GB -> cannot be decreased after creation
-  - name: two
-    host: "two"
-    port_prefix: 501
-    version: "14.0.0"
-    memoryGi: 4
-    storageSpaceGi: 2 
-  - name: three
-    host: "three"
-    port_prefix: 502
-    version: "14.0.0"
-    memoryGi: 4
-    storageSpaceGi: 2 
+
