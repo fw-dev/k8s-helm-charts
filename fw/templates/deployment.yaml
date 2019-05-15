@@ -27,6 +27,18 @@ spec:
           postStart:
             exec:
               command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .host }} >> /etc/hosts"]
+        livenessProbe:
+          httpGet:
+            path: /api/config/app
+            port: 443
+          initialDelaySeconds: 500
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/config/app
+            port: 443
+          initialDelaySeconds: 500
+          periodSeconds: 10
         env:
           - name: FW_VNC_RELAY_PORT
             value: "{{ .port_prefix }}10"
