@@ -5,4 +5,4 @@ maintainers:
 - name: Grzegorz Piekarski
 name: fw
 version: 1.0.1
-icon: https://github.com/fw-dev/k8s-helm-charts/blob/master/filewave_icon.png?raw=true
+icon: https://github.com/fw-dev/k8s-helm-charts/blob/master/fw/filewave_icon.png?raw=true
