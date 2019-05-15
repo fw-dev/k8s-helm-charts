@@ -10,7 +10,7 @@ entries:
     - name: Grzegorz Piekarski
     name: fw
     urls:
-    - https://github.com/fw-dev/k8s-helm-charts/fw-1.0.1.tgz
+    - https://github.com/fw-dev/k8s-helm-charts/blob/master/fw-1.0.1.tgz?raw=true
     version: 1.0.1
   - created: 2019-05-14T09:39:39.088135+02:00
     description: FileWave MDM Server
@@ -21,6 +21,6 @@ entries:
     - name: Grzegorz Piekarski
     name: fw
     urls:
-    - https://github.com/fw-dev/k8s-helm-charts/fw-1.0.0.tgz
+    - https://github.com/fw-dev/k8s-helm-charts/blob/master/fw-1.0.0.tgz?raw=true
     version: 1.0.0
 generated: 2019-05-14T09:39:39.085511+02:00
