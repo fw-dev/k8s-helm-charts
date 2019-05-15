@@ -7,4 +7,3 @@ servers:
     version: "14.0.0" # Specify the version of FileWave
     memoryGi: 4 # RAM size in GB
     storageSpaceGi: 2 # Disk Space in GB -> cannot be decreased after creation
-

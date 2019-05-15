@@ -19,7 +19,6 @@ spec:
       containers:
       - name: mdm-server
         image: filewave/fwserver:{{ .version }}
-        imagePullPolicy: Always # change for production!
         resources:
           requests:
             memory: "{{ .memoryGi }}Gi"
@@ -27,21 +26,26 @@ spec:
           postStart:
             exec:
               command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .host }} >> /etc/hosts"]
-        livenessProbe:
+        livenessProbe: # restart services when this is REALLY BORKED 
           httpGet:
             path: /api/config/app
             port: 443
-          initialDelaySeconds: 500
-          periodSeconds: 10
-        readinessProbe:
+            scheme: HTTPS
+          periodSeconds: 10         # once every 10 seconds
+          timeoutSeconds: 5         # timeout if no reply in 5 seconds
+          failureThreshold: 10      # failure after 10 attempts with no answer 
+          initialDelaySeconds: 100  # dont check for the first 200 seconds after pod creation
+        readinessProbe: # traffic to this pod is suspended when the probe fails
           httpGet:
             path: /api/config/app
             port: 443
-          initialDelaySeconds: 500
+            scheme: HTTPS
           periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
         env:
-          - name: FW_VNC_RELAY_PORT
-            value: "{{ .port_prefix }}10"
+        - name: FW_VNC_RELAY_PORT
+          value: "{{ .port_prefix }}10"
         volumeMounts:
           - mountPath: "/fwxserver/DB"
             name: ssd-vol-{{ .name }}
