@@ -88,16 +88,16 @@ spec:
             subPath: scripts
 
         ports:
-        - containerPort: 443
-        - containerPort: 20005
-        - containerPort: 20006
-        - containerPort: 20015
-        - containerPort: 20016
-        - containerPort: 20017        
-        - containerPort: 20050 # TO BE FIXED
-        - containerPort: 20443
-        - containerPort: 20445
-        - containerPort: 20446
+        - containerPort: 443 #http
+        - containerPort: 20443 #http
+        - containerPort: 20445 #http
+        - containerPort: 20446 #http
+        - containerPort: 20005 #tcp
+        - containerPort: 20006 #tcp
+        - containerPort: 20015 #tcp
+        - containerPort: 20016 #tcp
+        - containerPort: 20017 #tcp       
+        - containerPort: 20013 # tcp
         
       volumes:
       - name: standard-vol-{{ .Values.name }}

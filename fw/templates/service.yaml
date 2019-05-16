@@ -12,27 +12,7 @@ spec:
   - name: fw-web
     port: 443
     protocol: TCP
-   
-  - name: port20005
-    protocol: TCP
-    port: 20005
-    
-  - name: port20006
-    protocol: TCP
-    port: 20006
-    
-  - name: fwxserver-s
-    protocol: TCP
-    port: 20015
-    
-  - name: fwxserver-a 
-    protocol: TCP
-    port: 20016
-    
-  - name: fwserver-ssl
-    protocol: TCP
-    port: 20017
-    
+
   - name: mdm
     protocol: TCP
     port: 20443
@@ -46,8 +26,34 @@ spec:
     port: 20446
     
   - name: booster
-    port: {{ .port_prefix }}10
+    port: {{ .port_prefix }}3
+    targetPort: 20013
     protocol: TCP
+   
+  - name: port20005
+    protocol: TCP
+    port: {{ .port_prefix }}8
+    targetPort: 20005
+    
+  - name: port20006
+    protocol: TCP
+    port: {{ .port_prefix }}9
+    targetPort: 20006
+    
+  - name: fwxserver-s
+    protocol: TCP
+    port: {{ .port_prefix }}5
+    targetPort: 20015
+    
+  - name: fwxserver-a 
+    protocol: TCP
+    port: {{ .port_prefix }}6
+    targetPort: 20016
+    
+  - name: fwserver-ssl
+    protocol: TCP
+    port: {{ .port_prefix }}7
+    targetPort: 20017
 
   selector:
     app: fwserver-{{ .name }}

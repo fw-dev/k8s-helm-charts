@@ -1,4 +1,4 @@
----
+### SINGLE SERVER
 storageClassName: standard
 name: one # internal name in the cluster
 version: "14.0.0" # Specify the version of FileWave

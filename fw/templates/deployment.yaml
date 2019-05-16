@@ -97,7 +97,7 @@ spec:
         - containerPort: 20015
         - containerPort: 20016
         - containerPort: 20017        
-        - containerPort: {{ .port_prefix }}10 
+        - containerPort: 20013 #{{ .port_prefix }}10 
         - containerPort: 20443
         - containerPort: 20445
         - containerPort: 20446

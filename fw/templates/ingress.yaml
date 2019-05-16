@@ -43,33 +43,39 @@ spec:
             servicePort: noidea
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}2
+      port: {{ .port_prefix }}8
       noTLS: true
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: port20005
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}3
+      port: {{ .port_prefix }}9
       noTLS: true
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: port2006
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}4
+      port: {{ .port_prefix }}6
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: fwxserver-a
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}5
+      port: {{ .port_prefix }}7
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: fwserver-ssl
+    - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}5
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: fwsxerver-s
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}1
+      port: {{ .port_prefix }}3
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: booster
