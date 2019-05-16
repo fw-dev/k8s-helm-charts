@@ -1,0 +1,51 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fwserver-svc-{{ .Values.name }}
+  annotations:
+      ingress.appscode.com/backend-tls: ssl verify none
+spec:
+  type: LoadBalancer
+  ports:
+  - name: fw-web
+    port: 443
+    protocol: TCP
+   
+  - name: port20005
+    protocol: TCP
+    port: 20005
+    
+  - name: port20006
+    protocol: TCP
+    port: 20006
+    
+  - name: fwxserver-s
+    protocol: TCP
+    port: 20015
+    
+  - name: fwxserver-a 
+    protocol: TCP
+    port: 20016
+    
+  - name: fwserver-ssl
+    protocol: TCP
+    port: 20017
+    
+  - name: mdm
+    protocol: TCP
+    port: 20443
+    
+  - name: django
+    protocol: TCP
+    port: 20445
+
+  - name: noidea
+    protocol: TCP
+    port: 20446
+    
+  - name: booster
+    port: 20050 # TO BE FIXED
+    protocol: TCP
+
+  selector:
+    app: fwserver-{{ .Values.name }}

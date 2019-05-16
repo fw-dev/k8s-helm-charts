@@ -1,0 +1,31 @@
+## SINGLE SERVER
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fwserver-standard-{{ .Values.name }}
+  labels:
+    env: prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.storageSpaceGi }}Gi
+  storageClassName: {{ .Values.storageClassName }}
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fwserver-ssd-{{ .Values.name }}
+  labels:
+    env: prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.storageSpaceGi }}Gi
+  storageClassName: {{ .Values.storageClassName }}

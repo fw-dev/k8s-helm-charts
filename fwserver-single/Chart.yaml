@@ -1,0 +1,8 @@
+description: FileWave MDM Servers Infrastructure Load Balanced
+maintainers:
+- name: John Clayton
+- name: Matteo Ruello
+- name: Grzegorz Piekarski
+icon: https://raw.githubusercontent.com/fw-dev/k8s-helm-charts/master/fw/filewave_icon.png
+name: fw
+version: 1.0.2
