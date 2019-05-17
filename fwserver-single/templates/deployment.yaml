@@ -98,6 +98,7 @@ spec:
         - containerPort: 20016 #tcp
         - containerPort: 20017 #tcp       
         - containerPort: 20013 # tcp
+        - containerPort: 20030
         
       volumes:
       - name: standard-vol-{{ .Values.name }}

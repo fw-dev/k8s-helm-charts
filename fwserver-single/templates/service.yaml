@@ -46,6 +46,10 @@ spec:
   - name: booster
     port: 20050 # TO BE FIXED
     protocol: TCP
+  
+  - name: vnc-relay
+    port: 20030 # TO BE FIXED
+    protocol: TCP
 
   selector:
     app: fwserver-{{ .Values.name }}
