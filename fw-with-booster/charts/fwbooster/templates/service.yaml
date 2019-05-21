@@ -1,0 +1,23 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fwbooster-svc
+spec:
+  type: NodePort
+  ports:
+  - name: port20003
+    protocol: TCP
+    port: 20003
+  - name: port20004
+    protocol: TCP
+    port: 20004
+  - name: port20013
+    protocol: TCP
+    port: 20013
+  - name: port20014
+    protocol: TCP
+    port: 20014
+  selector:
+    app: fwbooster
+

@@ -1,0 +1,79 @@
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    ingress.appscode.com/type: HostPort
+    ingress.appscode.com/default-option: '{"dontlognull": "true"}'
+spec:
+  tls:
+  - secretName: default-cert
+    hosts:
+    {{- range .Values.servers }}
+      - {{ .host }}
+    {{- end }}
+      - booster 
+  rules:
+{{- range .Values.servers }}
+  - host: {{ .host }}
+    http:
+      port: 443
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: fw-web
+  - host: {{ .host }}
+    http:
+      port: 20443
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: mdm
+  - host: {{ .host }}
+    http:
+      port: 20445
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: django
+  - host: {{ .host }}
+    http:
+      port: 20446
+      paths:
+        - backend:
+            serviceName: fwserver-svc-{{ .name }}
+            servicePort: noidea
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}02
+      noTLS: true
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: port20005
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}03
+      noTLS: true
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: port2006
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}04
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: fwxserver-a
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}05
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: fwserver-ssl
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}10
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: booster
+  
+{{- end }}

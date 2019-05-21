@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fwbooster
+  labels:
+    app: fwbooster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fwbooster
+  template:
+    metadata:
+      labels:
+        app: fwbooster
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: fwbooster
+        image: filewave/fwbooster:14.0.0
+        ports:
+        - containerPort: 20013
+        - containerPort: 20014
+        - containerPort: 20003
+        - containerPort: 20004

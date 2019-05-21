@@ -1,0 +1,34 @@
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-booster
+  annotations:
+    ingress.appscode.com/type: HostPort
+    ingress.appscode.com/default-option: '{"dontlognull": "true"}'
+spec:
+  rules:
+  - host: booster
+    tcp:
+      port: 20003
+      backend:
+        serviceName: fwbooster-svc
+        servicePort: port20003
+  - host: booster
+    tcp:
+      port: 20004
+      backend:
+        serviceName: fwbooster-svc
+        servicePort: port20004
+  - host: booster
+    tcp:
+      port: 20013
+      backend:
+        serviceName: fwbooster-svc
+        servicePort: port20013
+  - host: booster
+    tcp:
+      port: 20014
+      backend:
+        serviceName: fwbooster-svc
+        servicePort: port20014
+

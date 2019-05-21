@@ -1,0 +1,7 @@
+description: FileWave MDM Servers Infrastructure Load Balanced
+maintainers:
+- name: John Clayton
+- name: Matteo Ruello
+- name: Grzegorz Piekarski
+name: fw-with-booster
+version: 1.0.1
