@@ -43,9 +43,6 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 3
-        env:
-        - name: FW_VNC_RELAY_PORT
-          value: "{{ .port_prefix }}10"
         volumeMounts:
           - mountPath: "/fwxserver/DB"
             name: ssd-vol-{{ .name }}
@@ -92,15 +89,16 @@ spec:
 
         ports:
         - containerPort: 443
-        - containerPort: 20005
-        - containerPort: 20006
+        - containerPort: {{ .port_prefix }}30
         - containerPort: 20015
         - containerPort: 20016
         - containerPort: 20017        
-        - containerPort: 20013 #{{ .port_prefix }}10 
+        - containerPort: 20013
         - containerPort: 20443
         - containerPort: 20445
         - containerPort: 20446
+        - containerPort: 20005
+        - containerPort: 20006
         
       volumes:
       - name: standard-vol-{{ .name }}

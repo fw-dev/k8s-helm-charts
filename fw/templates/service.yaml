@@ -26,34 +26,39 @@ spec:
     port: 20446
     
   - name: booster
-    port: {{ .port_prefix }}3
+    port: {{ .port_prefix }}13
     targetPort: 20013
     protocol: TCP
    
   - name: port20005
     protocol: TCP
-    port: {{ .port_prefix }}8
+    port: {{ .port_prefix }}05
     targetPort: 20005
     
   - name: port20006
     protocol: TCP
-    port: {{ .port_prefix }}9
+    port: {{ .port_prefix }}06
     targetPort: 20006
     
   - name: fwxserver-s
     protocol: TCP
-    port: {{ .port_prefix }}5
+    port: {{ .port_prefix }}15
     targetPort: 20015
     
   - name: fwxserver-a 
     protocol: TCP
-    port: {{ .port_prefix }}6
+    port: {{ .port_prefix }}16
     targetPort: 20016
     
   - name: fwserver-ssl
     protocol: TCP
-    port: {{ .port_prefix }}7
+    port: {{ .port_prefix }}17
     targetPort: 20017
+
+  - name: vnc-relay
+    protocol: TCP
+    port: {{ .port_prefix }}30
+    targetPort: {{ .port_prefix }}30
 
   selector:
     app: fwserver-{{ .name }}

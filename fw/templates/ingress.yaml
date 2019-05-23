@@ -43,41 +43,47 @@ spec:
             servicePort: noidea
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}8
+      port: {{ .port_prefix }}05
       noTLS: true
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: port20005
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}9
+      port: {{ .port_prefix }}06
       noTLS: true
       backend:
         serviceName: fwserver-svc-{{ .name }}
-        servicePort: port2006
+        servicePort: port20006
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}6
+      port: {{ .port_prefix }}16
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: fwxserver-a
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}7
+      port: {{ .port_prefix }}17
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: fwserver-ssl
-    - host: {{ .host }}
+  - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}5
+      port: {{ .port_prefix }}15
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: fwsxerver-s
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}3
+      port: {{ .port_prefix }}13
       backend:
         serviceName: fwserver-svc-{{ .name }}
         servicePort: booster
+  - host: {{ .host }}
+    tcp:
+      port: {{ .port_prefix }}30
+      backend:
+        serviceName: fwserver-svc-{{ .name }}
+        servicePort: vnc-relay
   
 {{- end }}
