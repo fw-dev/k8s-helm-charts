@@ -1,5 +1,15 @@
 apiVersion: v1
 entries:
+  fwserver-single:
+  - created: 2019-05-23T18:20:39.8568171+02:00
+    description: FileWave MDM Server
+    digest: abc2980a6177650f651026f3def8ca2dea3dfacbddc52e4864f9103f0c4af860
+    maintainers:
+    - name: Matteo Ruello
+    name: fwserver-single
+    urls:
+    - https://raw.githubusercontent.com/fw-dev/k8s-helm-charts/master/fwserver-single-1.0.0.tgz
+    version: 1.0.0
   fw:
   - created: 2019-05-15T18:30:39.8578182+02:00
     description: FileWave MDM Servers Infrastructure Load Balanced
@@ -26,7 +36,7 @@ entries:
     - https://raw.githubusercontent.com/fw-dev/k8s-helm-charts/master/fw-1.0.1.tgz
     version: 1.0.1
   - created: 2019-05-15T18:30:39.8568171+02:00
-    description: FileWave MDM Server
+    description: FileWave MDM Server Infrastructure Load Balanced
     digest: abc2980a6177650f651026f3def8ca2dea3dfacbddc52e4864f9103f0c4af860
     maintainers:
     - name: John Clayton
@@ -36,4 +46,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/fw-dev/k8s-helm-charts/master/fw-1.0.0.tgz
     version: 1.0.0
-generated: 2019-05-15T18:30:39.8558176+02:00
+generated: 2019-05-23T18:30:39.8558176+02:00
