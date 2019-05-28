@@ -1,6 +1,6 @@
 {{- range .Values.servers }}
 ---
-kind: StatefulSet
+kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: fwserver-{{ .name }}
