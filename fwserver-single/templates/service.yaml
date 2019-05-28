@@ -44,11 +44,11 @@ spec:
     port: 20446
     
   - name: booster
-    port: 20050 # TO BE FIXED
+    port: 20050 
     protocol: TCP
   
   - name: vnc-relay
-    port: 20030 # TO BE FIXED
+    port: 20030
     protocol: TCP
 
   selector:

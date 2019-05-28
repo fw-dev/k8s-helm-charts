@@ -4,6 +4,7 @@ entries:
   - created: 2019-05-23T18:20:39.8568171+02:00
     description: FileWave MDM Server
     digest: abc2980a6177650f651026f3def8ca2dea3dfacbddc52e4864f9103f0c4af860
+    icon: https://raw.githubusercontent.com/fw-dev/k8s-helm-charts/master/fw/filewave_icon.png
     maintainers:
     - name: Matteo Ruello
     name: fwserver-single
