@@ -2,7 +2,7 @@
 storageClassName: standard
 servers:
   - name: one # internal name in the cluster
-    host: "one" # FQDN, used by the proxy to redirect
+    host: "one.filewave.ch" # FQDN, used by the proxy to redirect
     port_prefix: 500 # this will allocate ports 5001 to 5005
     version: "14.0.0" # Specify the version of FileWave
     memoryGi: 4 # RAM size in GB

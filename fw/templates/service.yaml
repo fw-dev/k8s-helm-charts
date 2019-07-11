@@ -4,8 +4,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: fwserver-svc-{{ .name }}
-  annotations:
-      ingress.appscode.com/backend-tls: ssl verify none
+  # annotations:
+    # ingress.appscode.com/backend-tls: ssl verify none
+    # ingress.appscode.com/ssl-passthrough: "true"
 spec:
   type: NodePort
   ports:
