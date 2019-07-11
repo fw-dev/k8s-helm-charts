@@ -3,29 +3,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: fwserver-svc-{{ .name }}
-  # annotations:
+  name: fwserver-svc-tcp-{{ .name }}
+  annotations:
     # ingress.appscode.com/backend-tls: ssl verify none
     # ingress.appscode.com/ssl-passthrough: "true"
 spec:
   type: NodePort
   ports:
-  - name: fw-web
-    port: 443
-    protocol: TCP
-
-  - name: mdm
-    protocol: TCP
-    port: 20443
-    
-  - name: django
-    protocol: TCP
-    port: 20445
-
-  - name: noidea
-    protocol: TCP
-    port: 20446
-    
   - name: booster
     port: {{ .port_prefix }}13
     targetPort: 20013
