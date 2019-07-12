@@ -4,6 +4,7 @@ metadata:
   name: ingress
   annotations:
     ingress.appscode.com/type: LoadBalancer
+    # ingress.appscode.com/ssl-passthrough: "true"
 spec:
   tls:
   - secretName: default-cert
@@ -18,72 +19,77 @@ spec:
       port: 443
       paths:
         - backend:
-            serviceName: fwserver-svc-{{ .name }}
+            serviceName: fwserver-svc-http-{{ .name }}
             servicePort: fw-web
   - host: {{ .host }}
     http:
       port: 20443
       paths:
         - backend:
-            serviceName: fwserver-svc-{{ .name }}
+            serviceName: fwserver-svc-http-{{ .name }}
             servicePort: mdm
   - host: {{ .host }}
     http:
       port: 20445
       paths:
         - backend:
-            serviceName: fwserver-svc-{{ .name }}
+            serviceName: fwserver-svc-http-{{ .name }}
             servicePort: django
   - host: {{ .host }}
     http:
       port: 20446
       paths:
         - backend:
-            serviceName: fwserver-svc-{{ .name }}
+            serviceName: fwserver-svc-http-{{ .name }}
             servicePort: noidea
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}05
       noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: port20005
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}06
       noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: port20006
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}16
+      noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: fwxserver-a
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}17
+      noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: fwserver-ssl
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}15
+      noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: fwsxerver-s
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}13
+      noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: booster
   - host: {{ .host }}
     tcp:
       port: {{ .port_prefix }}30
+      noTLS: true
       backend:
-        serviceName: fwserver-svc-{{ .name }}
+        serviceName: fwserver-svc-tcp-{{ .name }}
         servicePort: vnc-relay
   
 {{- end }}

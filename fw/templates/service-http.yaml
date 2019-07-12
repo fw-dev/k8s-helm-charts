@@ -1,0 +1,32 @@
+{{- range .Values.servers }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fwserver-svc-http-{{ .name }}
+  annotations:
+     ingress.appscode.com/backend-tls: ssl verify none
+    # ingress.appscode.com/ssl-passthrough: "true"
+spec:
+  type: NodePort
+  ports:
+  - name: fw-web
+    port: 443
+    protocol: TCP
+
+  - name: mdm
+    protocol: TCP
+    port: 20443
+    
+  - name: django
+    protocol: TCP
+    port: 20445
+
+  - name: noidea
+    protocol: TCP
+    port: 20446
+    
+  selector:
+    app: fwserver-{{ .name }}
+{{- end}}
+

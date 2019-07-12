@@ -25,7 +25,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .host }} >> /etc/hosts"]
+              command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .host }} >> /etc/hosts && mkdir -p /etc/xdg/filewave && echo '[General]' > /etc/xdg/filewave/fwxserver.conf && echo 'vncRelayPort={{ .port_prefix }}30' >>/etc/xdg/filewave/fwxserver.conf && cp -rfL /tmp/secret/server.key /usr/local/filewave/certs/ && cp -rfL /tmp/secret/server.crt /usr/local/filewave/certs/"]
         livenessProbe: # restart services when this is REALLY BORKED 
           httpGet:
             path: /api/config/app
@@ -86,6 +86,8 @@ spec:
           - mountPath: "/usr/local/filewave/scripts"
             name: standard-vol-{{ .name }}
             subPath: scripts
+          - mountPath: "/tmp/secret"
+            name: cert-secret
 
         ports:
         - containerPort: 443
@@ -107,6 +109,16 @@ spec:
       - name: ssd-vol-{{ .name }}
         persistentVolumeClaim:
           claimName: fwserver-ssd-{{ .name }}
+      - name: cert-secret
+        secret:
+          secretName: default-cert
+          items:
+          - key: tls.key
+            path: server.key #/tmp/secret/server.key cp /tmp/secret/server.key /
+            mode: 0600
+          - key: tls.crt
+            path: server.crt
+            mode: 0664
       imagePullSecrets:
         - name: regcred
 {{- end}}
