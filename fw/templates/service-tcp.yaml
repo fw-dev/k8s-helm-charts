@@ -10,10 +10,6 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - name: booster
-    port: {{ .port_prefix }}13
-    targetPort: 20013
-    protocol: TCP
    
   - name: port20005
     protocol: TCP
@@ -44,6 +40,33 @@ spec:
     protocol: TCP
     port: {{ .port_prefix }}30
     targetPort: {{ .port_prefix }}30
+
+    ### THESE BELOW ARE NORMAL PORTS FOR INTERNAL ROUTING
+
+  - name: direct20005
+    protocol: TCP
+    port: 20005
+    targetPort: 20005
+    
+  - name: direct20006
+    protocol: TCP
+    port: {{ .port_prefix }}06
+    targetPort: 20006
+    
+  - name: direct-fwxserver-s
+    protocol: TCP
+    port: 20015
+    targetPort: 20015
+    
+  - name: direct-fwxserver-a 
+    protocol: TCP
+    port: 20016
+    targetPort: 20016
+    
+  - name: direct-fwserver-ssl
+    protocol: TCP
+    port: 20017
+    targetPort: 20017
 
   selector:
     app: fwserver-{{ .name }}

@@ -1,0 +1,73 @@
+{{- range .Values.servers }}
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: fwserver-{{ .name }}-boosters
+  labels:
+    app: fwserver-{{ .name }}-boosters
+spec:
+  replicas: 1 #{{ .numBoosters }}
+  selector:
+    matchLabels:
+      app: fwserver-{{ .name }}-boosters
+  template:
+    metadata:
+      labels:
+        app: fwserver-{{ .name }}-boosters
+    spec:
+      containers:
+      - name: booster
+        image: filewave/fwbooster:{{ .boosterVersion }}
+        resources:
+          requests:
+            memory: "500Mi"
+        env:
+        - name: "FILEWAVE_SERVER_HOST"
+          value: "{{ .host }}"
+        - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
+          value: "{{ .port_prefix }}15"
+        - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
+          value: "{{ .host }}"
+        - name: "FWBOOSTER_NAME"
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        #- name: "FILEWAVE_BOOSTER_SERVER2_PORT"
+        #  value: "20013"
+        #- name: "FILEWAVE_BOOSTER_SERVER2_HOST"
+        #  value: "fwserver-svc-boosters-{{ .name }}"
+        ports:
+        - containerPort: 20013
+        - containerPort: 20014
+        - containerPort: 20003
+        - containerPort: 20004
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "echo 34.76.8.151 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
+      imagePullSecrets:
+        - name: regcred
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: fwserver-svc-boosters-{{ .name }}
+spec:
+  type: LoadBalancer
+  ports:
+  - name: booster
+    protocol: TCP
+    port: 20013
+    targetPort: 20013
+  - name: booster-ssl
+    protocol: TCP
+    port: 20014
+    targetPort: 20014
+
+  selector:
+    app: fwserver-{{ .name }}-boosters
+
+{{- end}}

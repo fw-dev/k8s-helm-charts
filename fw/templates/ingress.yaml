@@ -79,13 +79,6 @@ spec:
         servicePort: fwsxerver-s
   - host: {{ .host }}
     tcp:
-      port: {{ .port_prefix }}13
-      noTLS: true
-      backend:
-        serviceName: fwserver-svc-tcp-{{ .name }}
-        servicePort: booster
-  - host: {{ .host }}
-    tcp:
       port: {{ .port_prefix }}30
       noTLS: true
       backend:

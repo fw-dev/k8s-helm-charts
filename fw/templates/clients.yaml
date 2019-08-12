@@ -1,0 +1,44 @@
+{{- range .Values.servers }}
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: fwserver-{{ .name }}-clients
+  labels:
+    app: fwserver-{{ .name }}-clients
+spec:
+  replicas: {{ .numClients }}
+  selector:
+    matchLabels:
+      app: fwserver-{{ .name }}-clients
+  template:
+    metadata:
+      labels:
+        app: fwserver-{{ .name }}-clients
+    spec:
+      containers:
+      - name: client
+        image: filewave/fwcld:{{ .clientVersion }}
+        resources:
+          requests:
+            memory: "20Mi"
+        env:
+        - name: "FILEWAVE_SERVER_HOST"
+          value: "{{ .host }}"
+        - name: "FILEWAVE_BOOSTER_HOST"
+          value: "fwserver-svc-boosters-{{ .name }}"
+        - name: "FWCLD_SERVER_PORT"
+          value: "{{ .port_prefix }}15"
+        - name: "FWCLD_SERVER_PUB_PORT"
+          value: "{{ .port_prefix }}05"
+        - name: "FWCLD_CLIENT_NAME"
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "echo 34.76.8.151 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
+      imagePullSecrets:
+        - name: regcred
+{{- end}}
