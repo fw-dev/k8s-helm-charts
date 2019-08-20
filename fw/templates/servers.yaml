@@ -19,6 +19,7 @@ spec:
       containers:
       - name: mdm-server
         image: filewave/fwserver:{{ .version }}
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "{{ .memoryGi }}Gi"

@@ -19,6 +19,7 @@ spec:
       containers:
       - name: booster
         image: filewave/fwbooster:{{ .boosterVersion }}
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "500Mi"
@@ -26,7 +27,7 @@ spec:
         - name: "FILEWAVE_SERVER_HOST"
           value: "{{ .host }}"
         - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
-          value: "{{ .port_prefix }}15"
+          value: "{{ .port_prefix }}16" # There is a 'bug' in booster port configurator, so we need to "tweak" and use a wrong port, so that the 'bug' corrects it
         - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
           value: "{{ .host }}"
         - name: "FWBOOSTER_NAME"
@@ -38,10 +39,10 @@ spec:
         #- name: "FILEWAVE_BOOSTER_SERVER2_HOST"
         #  value: "fwserver-svc-boosters-{{ .name }}"
         ports:
-        - containerPort: 20013
-        - containerPort: 20014
         - containerPort: 20003
         - containerPort: 20004
+        - containerPort: 20013
+        - containerPort: 20014
         lifecycle:
           postStart:
             exec:
@@ -58,6 +59,14 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
+  - name: booster-pub
+    protocol: TCP
+    port: 20003
+    targetPort: 20003
+  - name: booster-pub-ssl
+    protocol: TCP
+    port: 20004
+    targetPort: 20004
   - name: booster
     protocol: TCP
     port: 20013
