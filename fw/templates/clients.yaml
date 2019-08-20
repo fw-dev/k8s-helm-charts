@@ -33,11 +33,11 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: "$FWCLD_BOOSTER1_HOST"
+        - name: "FWCLD_BOOSTER1_HOST"
           value: "fwserver-svc-boosters-{{ .name }}"
-        - name: "$FWCLD_BOOSTER1_PORT"
+        - name: "FWCLD_BOOSTER1_PORT"
           value: "20013"
-        - name: "$FWCLD_BOOSTER1_PUB_PORT"
+        - name: "FWCLD_BOOSTER1_PUB_PORT"
           value: "20003"
         lifecycle:
           postStart:

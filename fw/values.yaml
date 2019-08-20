@@ -8,6 +8,6 @@ servers:
     clientVersion: "13.0.0" # Specify the version of FileWave client
     boosterVersion: "14.0.0" # Specify the version of FileWave client
     memoryGi: 8 # RAM size in GB
-    storageSpaceGi: 2 # Disk Space in GB -> cannot be decreased after creation
+    storageSpaceGi: 6 # Disk Space in GB -> cannot be decreased after creation
     numClients: 20 # Number of clients to deploy
     numBoosters: 5 # Number of boosters to deploy
