@@ -26,6 +26,9 @@ spec:
     protocol: TCP
     port: 20446
     
+  - name: dashboard
+    protocol: TCP
+    port: 20448
   selector:
     app: fwserver-{{ .name }}
 {{- end}}

@@ -50,7 +50,7 @@ spec:
     
   - name: direct20006
     protocol: TCP
-    port: {{ .port_prefix }}06
+    port: 20006
     targetPort: 20006
     
   - name: direct-fwxserver-s

@@ -21,6 +21,10 @@ spec:
         - backend:
             serviceName: fwserver-svc-http-{{ .name }}
             servicePort: fw-web
+        - path: /dashboard
+          backend:
+            serviceName: fwserver-svc-http-{{ .name }}
+            servicePort: dashboard
   - host: {{ .host }}
     http:
       port: 20443
@@ -28,6 +32,13 @@ spec:
         - backend:
             serviceName: fwserver-svc-http-{{ .name }}
             servicePort: mdm
+  - host: {{ .host }}
+    http:
+      port: 20448
+      paths:
+        - backend:
+            serviceName: fwserver-svc-http-{{ .name }}
+            servicePort: dashboard
   - host: {{ .host }}
     http:
       port: 20445
