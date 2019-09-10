@@ -7,7 +7,7 @@ metadata:
   labels:
     app: fwserver-{{ .name }}-boosters
 spec:
-  replicas: 1 #{{ .numBoosters }}
+  replicas: {{ .numBoosters }}
   selector:
     matchLabels:
       app: fwserver-{{ .name }}-boosters
@@ -46,7 +46,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "echo 34.76.8.151 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
+              command: ["/bin/sh", "-c", "echo 35.195.248.55 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
       imagePullSecrets:
         - name: regcred
 
