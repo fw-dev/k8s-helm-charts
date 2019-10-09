@@ -42,7 +42,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "echo 34.76.8.151 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
+              command: ["/bin/sh", "-c", "echo 104.155.36.210 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
       imagePullSecrets:
         - name: regcred
 {{- end}}

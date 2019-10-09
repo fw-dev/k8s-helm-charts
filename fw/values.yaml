@@ -3,11 +3,11 @@ storageClassName: standard
 servers:
   - name: one # internal name in the cluster
     host: "one.filewave.ch" # FQDN, used by the proxy to redirect
-    port_prefix: 500 # this will allocate ports 5001 to 5005
+    port_prefix: 200 # this will allocate ports 5001 to 5005
     version: "14.0.0" # Specify the version of FileWave
-    clientVersion: "13.0.0" # Specify the version of FileWave client
+    clientVersion: "14.0.0" # Specify the version of FileWave client
     boosterVersion: "14.0.0" # Specify the version of FileWave client
     memoryGi: 8 # RAM size in GB
     storageSpaceGi: 6 # Disk Space in GB -> cannot be decreased after creation
-    numClients: 20 # Number of clients to deploy
-    numBoosters: 5 # Number of boosters to deploy
+    numClients: 10 # Number of clients to deploy
+    numBoosters: 1 # Number of boosters to deploy

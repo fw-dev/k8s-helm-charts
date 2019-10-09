@@ -27,7 +27,7 @@ spec:
         - name: "FILEWAVE_SERVER_HOST"
           value: "{{ .host }}"
         - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
-          value: "{{ .port_prefix }}16" # There is a 'bug' in booster port configurator, so we need to "tweak" and use a wrong port, so that the 'bug' corrects it
+          value: "{{ .port_prefix }}15"
         - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
           value: "{{ .host }}"
         - name: "FWBOOSTER_NAME"
@@ -46,7 +46,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "echo 35.195.248.55 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
+              command: ["/bin/sh", "-c", "echo 104.155.36.210 {{ .host }} >> /etc/hosts" ] # This line should be removed once the IP is fixed
       imagePullSecrets:
         - name: regcred
 
