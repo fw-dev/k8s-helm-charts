@@ -45,13 +45,13 @@ spec:
           timeoutSeconds: 5
           failureThreshold: 3
         volumeMounts:
-          - mountPath: "/fwxserver/DB"
+          - mountPath: "/usr/local/filewave/fwxserver/DB"
             name: ssd-vol-{{ .name }}
             subPath: db
           - mountPath: "/private/var/log/FWAdmin Audit"
             name: standard-vol-{{ .name }}
             subPath: audit
-          - mountPath: "/fwxserver/Data Folder"
+          - mountPath: "/usr/local/filewave/fwxserver/Data Folder"
             name: standard-vol-{{ .name }}
             subPath: data-folder
           - mountPath: "/usr/local/filewave/apache/conf"
