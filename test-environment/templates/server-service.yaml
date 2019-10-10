@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-server-svc
+spec:
+    type: LoadBalancer
+    ports:
+        - name: web
+          port: 443
+          protocol: TCP
+
+        - name: fwxserver-zmq-publish
+          protocol: TCP
+          port: 20005
+
+        - name: fwxserver-zmq-router
+          protocol: TCP
+          port: 20006
+
+        - name: fwxserver-s
+          protocol: TCP
+          port: 20015
+
+        - name: fwxserver-a
+          protocol: TCP
+          port: 20016
+
+        - name: fwserver-s-ssl
+          protocol: TCP
+          port: 20017
+
+        - name: vnc-relay
+          port: 20030
+          protocol: TCP
+
+        - name: django
+          protocol: TCP
+          port: 20443
+
+        - name: django-inventory
+          protocol: TCP
+          port: 20445
+
+        - name: django-dashboard
+          protocol: TCP
+          port: 20446
+
+        - name: grafana
+          protocol: TCP
+          port: 20448
+
+    selector:
+        app: test-environment-{{ .Release.Name }}-server

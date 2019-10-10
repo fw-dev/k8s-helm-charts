@@ -1,0 +1,10 @@
+serverHostname: test-environment.filewave.ch
+serverVersion: 14.0.0
+serverMemoryGi: 4
+serverStorageGi: 6
+
+boosterVersion: 14.0.0
+boosterHasPublicIpAddressForDebug: false
+
+clientVersion: 14.0.0
+clientCount: 1

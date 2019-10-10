@@ -1,0 +1,30 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-booster-svc
+spec:
+{{ if .Values.boosterHasPublicIpAddressForDebug }}
+    type: LoadBalancer
+{{ else }}
+    type: ClusterIP
+{{ end }}
+    ports:
+        - name: fwbooster-zmq-publish
+          protocol: TCP
+          port: 20003
+          targetPort: 20003
+        - name: fwbooster-zmq-router
+          protocol: TCP
+          port: 20004
+          targetPort: 20004
+        - name: fwbooster
+          protocol: TCP
+          port: 20013
+          targetPort: 20013
+        - name: fwbooster-ssl
+          protocol: TCP
+          port: 20014
+          targetPort: 20014
+
+    selector:
+        app: test-environment-{{ .Release.Name }}-booster

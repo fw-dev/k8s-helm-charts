@@ -1,0 +1,5 @@
+description: Test environment for FileWave (including Server, Boosters and Clients)
+maintainers:
+  - name: FileWave
+name: test-environment
+version: 0.0.1

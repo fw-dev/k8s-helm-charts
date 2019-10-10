@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-client
+    labels:
+        app: test-environment-{{ .Release.Name }}-client
+spec:
+    replicas: {{ .Values.clientCount }}
+    selector:
+        matchLabels:
+            app: test-environment-{{ .Release.Name }}-client
+    template:
+        metadata:
+            labels:
+                app: test-environment-{{ .Release.Name }}-client
+        spec:
+            containers:
+                - name: fwclient
+                  image: "filewave/fwcld:{{ .Values.clientVersion }}"
+                  resources:
+                      requests:
+                          memory: "20Mi"
+                  env:
+                      - name: "FILEWAVE_SERVER_HOST"
+                        value: "{{ .Values.serverHostname }}"
+                      - name: "FWCLD_SERVER_PORT"
+                        value: "20015"
+                      - name: "FWCLD_SERVER_PUB_PORT"
+                        value: "20005"
+                      - name: "FWCLD_CLIENT_NAME"
+                        valueFrom:
+                            fieldRef:
+                                fieldPath: metadata.name
+                      - name: "FWCLD_BOOSTER1_HOST"
+                        value: "test-environment-{{ .Release.Name }}-booster-svc"
+                      - name: "FWCLD_BOOSTER1_PORT"
+                        value: "20013"
+                      - name: "FWCLD_BOOSTER1_PUB_PORT"
+                        value: "20003"
+                  lifecycle:
+                      postStart:
+                          exec:
+                              command: ["/bin/sh", "-c", "echo 35.233.22.3 {{ .Values.serverHostname }} >> /etc/hosts"]
+            imagePullSecrets:
+                - name: regcred

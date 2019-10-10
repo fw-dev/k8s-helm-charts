@@ -1,0 +1,27 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-standard-pvc
+spec:
+    accessModes:
+        - ReadWriteOnce
+    volumeMode: Filesystem
+    resources:
+        requests:
+            storage: {{ .Values.serverStorageGi }}Gi
+    storageClassName: standard
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-ssd-pvc
+spec:
+    accessModes:
+        - ReadWriteOnce
+    volumeMode: Filesystem
+    resources:
+        requests:
+            storage: {{ .Values.serverStorageGi }}Gi
+    storageClassName: standard                                 # standard instead of ssd on purpose for now

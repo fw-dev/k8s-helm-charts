@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: test-environment-{{ .Release.Name }}-booster
+    labels:
+        app: test-environment-{{ .Release.Name }}-booster
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: test-environment-{{ .Release.Name }}-booster
+    template:
+        metadata:
+            labels:
+                app: test-environment-{{ .Release.Name }}-booster
+        spec:
+            containers:
+                - name: fwbooster
+                  image: "filewave/fwbooster:{{ .Values.boosterVersion }}"
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: "500Mi"
+                  env:
+                      - name: "FILEWAVE_SERVER_HOST"
+                        value: "{{ .Values.serverHostname }}"
+                      - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
+                        value: "20015"
+                      - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
+                        value: "{{ .Values.serverHostname }}"
+                      - name: "FWBOOSTER_NAME"
+                        valueFrom:
+                            fieldRef:
+                                fieldPath: metadata.name
+                  ports:
+                      - containerPort: 20003
+                      - containerPort: 20004
+                      - containerPort: 20013
+                      - containerPort: 20014
+                  lifecycle:
+                      postStart:
+                          exec:
+                              command: ["/bin/sh", "-c", "echo 35.233.22.3 {{ .Values.serverHostname }} >> /etc/hosts"]
+            imagePullSecrets:
+                - name: regcred
