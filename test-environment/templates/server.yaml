@@ -1,18 +1,18 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-server
+    name: {{ .Values.environmentName }}-server
     labels:
-        app: test-environment-{{ .Release.Name }}-server
+        app: {{ .Values.environmentName }}-server
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: test-environment-{{ .Release.Name }}-server
+            app: {{ .Values.environmentName }}-server
     template:
         metadata:
             labels:
-                app: test-environment-{{ .Release.Name }}-server
+                app: {{ .Values.environmentName }}-server
         spec:
             containers:
                 - name: fwserver
@@ -104,10 +104,10 @@ spec:
             volumes:
                 - name: standard-vol-{{ .Release.Name }}
                   persistentVolumeClaim:
-                      claimName: test-environment-{{ .Release.Name }}-standard-pvc
+                      claimName: {{ .Values.environmentName }}-standard-pvc
                 - name: ssd-vol-{{ .Release.Name }}
                   persistentVolumeClaim:
-                      claimName: test-environment-{{ .Release.Name }}-ssd-pvc
+                      claimName: {{ .Values.environmentName }}-ssd-pvc
                 - name: cert-secret
                   secret:
                       secretName: default-cert

@@ -1,33 +1,36 @@
+{{- range .Values.boostersConfiguration }}
+{{- if .enabled }}
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-booster
+    name: {{ $.Values.environmentName }}-booster-{{ .name }}
     labels:
-        app: test-environment-{{ .Release.Name }}-booster
+        app: {{ $.Values.environmentName }}-booster-{{ .name }}
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: test-environment-{{ .Release.Name }}-booster
+            app: {{ $.Values.environmentName }}-booster-{{ .name }}
     template:
         metadata:
             labels:
-                app: test-environment-{{ .Release.Name }}-booster
+                app: {{ $.Values.environmentName }}-booster-{{ .name }}
         spec:
             containers:
                 - name: fwbooster
-                  image: "filewave/fwbooster:{{ .Values.boosterVersion }}"
+                  image: "filewave/fwbooster:{{ $.Values.boosterVersion }}"
                   imagePullPolicy: Always
                   resources:
                       requests:
                           memory: "500Mi"
                   env:
                       - name: "FILEWAVE_SERVER_HOST"
-                        value: "{{ .Values.serverHostname }}"
+                        value: {{ $.Values.serverHostname | quote }}
                       - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
-                        value: "20015"
+                        value: {{ .upstreamPort | quote }}
                       - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
-                        value: "{{ .Values.serverHostname }}"
+                        value: {{ .upstreamHostname | quote }}
                       - name: "FWBOOSTER_NAME"
                         valueFrom:
                             fieldRef:
@@ -40,6 +43,8 @@ spec:
                   lifecycle:
                       postStart:
                           exec:
-                              command: ["/bin/sh", "-c", "echo \"$(nslookup test-environment-{{ .Release.Name }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ .Values.serverHostname }}\" >> /etc/hosts"]
+                              command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
             imagePullSecrets:
                 - name: regcred
+{{- end }}
+{{- end }}

@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-standard-pvc
+    name: {{ .Values.environmentName }}-standard-pvc
 spec:
     accessModes:
         - ReadWriteOnce
@@ -16,7 +16,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-ssd-pvc
+    name: {{ .Values.environmentName }}-ssd-pvc
 spec:
     accessModes:
         - ReadWriteOnce

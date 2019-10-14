@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-server-svc
+    name: {{ .Values.environmentName }}-server-svc
 spec:
     type: LoadBalancer
     ports:
@@ -50,4 +50,4 @@ spec:
           port: 20448
 
     selector:
-        app: test-environment-{{ .Release.Name }}-server
+        app: {{ .Values.environmentName }}-server

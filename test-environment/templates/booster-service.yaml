@@ -1,13 +1,16 @@
+{{- range .Values.boostersConfiguration }}
+{{- if .enabled }}
+---
 kind: Service
 apiVersion: v1
 metadata:
-    name: test-environment-{{ .Release.Name }}-booster-svc
+    name: {{ $.Values.environmentName }}-booster-{{ .name }}-svc
 spec:
-{{ if .Values.boosterHasPublicIpAddressForDebug }}
+{{- if .hasPublicIpAddressForDebug }}
     type: LoadBalancer
-{{ else }}
+{{- else }}
     type: ClusterIP
-{{ end }}
+{{- end }}
     ports:
         - name: fwbooster-zmq-publish
           protocol: TCP
@@ -25,6 +28,7 @@ spec:
           protocol: TCP
           port: 20014
           targetPort: 20014
-
     selector:
-        app: test-environment-{{ .Release.Name }}-booster
+        app: {{ $.Values.environmentName }}-booster-{{ .name }}
+{{- end }}
+{{- end }}
