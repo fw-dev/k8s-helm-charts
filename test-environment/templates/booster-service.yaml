@@ -1,5 +1,5 @@
 {{- range .Values.boostersConfiguration }}
-{{- if .enabled }}
+{{- if and .enabled .serviceEnabled }}
 ---
 kind: Service
 apiVersion: v1

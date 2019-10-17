@@ -1,5 +1,7 @@
 environmentName: te-marcins
 
+serverEnabled: true
+serverServiceEnabled: true
 serverHostname: &serverHostname test-environment.filewave.ch
 serverVersion: 14.0.0
 serverMemoryGi: 4
@@ -9,26 +11,31 @@ boosterVersion: 14.0.0
 boostersConfiguration:
   - name: &notChained1BoosterConfigurationName not-chained-1
     enabled: false
+    serviceEnabled: true
     upstreamHostname: *serverHostname
     upstreamPort: 20015
     hasPublicIpAddressForDebug: false
   - name: &notChained2BoosterConfigurationName not-chained-2
     enabled: false
+    serviceEnabled: true
     upstreamHostname: *serverHostname
     upstreamPort: 20015
     hasPublicIpAddressForDebug: false
   - name: &chained1BoosterConfigurationName chained-1
     enabled: true
+    serviceEnabled: true
     upstreamHostname: *serverHostname
     upstreamPort: 20015
     hasPublicIpAddressForDebug: false
   - name: &chained2BoosterConfigurationName chained-2
     enabled: true
+    serviceEnabled: true
     upstreamHostname: te-marcins-booster-chained-1-svc      # Service prefix must be in sync with "environmentName".
     upstreamPort: 20013
     hasPublicIpAddressForDebug: false
   - name: &chained3BoosterConfigurationName chained-3
     enabled: true
+    serviceEnabled: true
     upstreamHostname: te-marcins-booster-chained-2-svc      # Service prefix must be in sync with "environmentName".
     upstreamPort: 20013
     hasPublicIpAddressForDebug: false

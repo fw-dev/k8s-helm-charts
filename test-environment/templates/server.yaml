@@ -1,3 +1,4 @@
+{{- if .Values.serverEnabled }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -25,15 +26,6 @@ spec:
                       postStart:
                           exec:
                               command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .Values.serverHostname }} >> /etc/hosts && cp -rfL /tmp/secret/server.key /usr/local/filewave/certs/ && cp -rfL /tmp/secret/server.crt /usr/local/filewave/certs/"]
-                  livenessProbe:
-                      httpGet:
-                          path: /api/config/app
-                          port: 443
-                          scheme: HTTPS
-                      periodSeconds: 10
-                      timeoutSeconds: 5
-                      failureThreshold: 10
-                      initialDelaySeconds: 100
                   readinessProbe:
                       httpGet:
                           path: /api/config/app
@@ -120,4 +112,4 @@ spec:
                             mode: 0664
             imagePullSecrets:
                 - name: regcred
-
+{{- end }}
