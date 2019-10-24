@@ -1,13 +1,46 @@
+# --- General ---
+
+# environmentName is for defining a prefix that will be used to name objects deployed to Kubernetes.
 environmentName: te-marcins
 
+# --- Server Configuration ---
+
+# serverEnabled is for enabling or disabling Server's Kubernetes object.
 serverEnabled: true
+
+# serverServiceEnabled is for enabling or disabling Server's Kubernetes Service object. Disabling Service will
+# effectively break all incoming communication.
 serverServiceEnabled: true
+
+# serverHostname is for defining a hostname all components in the system (Server's internal ones, Boosters, Clients,
+# Admins) must use to communicate with the Server.
 serverHostname: &serverHostname test-environment.filewave.ch
+
+# serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
+# image.
 serverVersion: 14.0.0
+
+# serverMemoryGi is for defining how much memory Server will request.
 serverMemoryGi: 4
+
+# serverStorageGi is for defining how much disk space Server will request.
 serverStorageGi: 6
 
+# --- Boosters Configuration ---
+
+# boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
+# image.
 boosterVersion: 14.0.0
+
+# boostersConfiguration is a list of dictionaries that define Boosters which will be deployed to Kubernetes.
+# - name is for defining Booster's name.
+#   enabled is for enabling or disabling Booster's Kubernetes object.
+#   serviceEnabled is for enabling or disabling Booster's Kubernetes Service object. Disabling Service will
+#   effectively break all incoming communication.
+#   upstreamHostname is for defining hostname of an upstream used by a Booster. Due to limitations of YAML and
+#   values.yaml upstreamHostname must be manually kept in sync with environmentName.
+#   upstreamPort is for defining port of an upstream used by a Booster.
+#   hasPublicIpAddressForDebug is for enabling getting public IP address for a Booster. For debug purposes.
 boostersConfiguration:
   - name: &notChained1BoosterConfigurationName not-chained-1
     enabled: false
@@ -40,7 +73,17 @@ boostersConfiguration:
     upstreamPort: 20013
     hasPublicIpAddressForDebug: false
 
+# --- Clients Configuration ---
+
+# clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
+# image.
 clientVersion: 14.0.0
+
+# clientsConfiguration is a list of dictionaries that define Clients which will be deployed to Kubernetes.
+# - name is for defining name for group of Clients with a specific configuration.
+#   enabled is for enabling of disabling Clients' Kubernetes object.
+#   count is for defining number of Clients.
+#   upstreamBoosterHostname is for defining hostname of an upstream used by Clients.
 clientsConfiguration:
   - name: with-server
     enabled: true
