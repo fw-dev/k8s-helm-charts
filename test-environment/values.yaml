@@ -83,21 +83,27 @@ clientVersion: 14.0.0
 # - name is for defining name for group of Clients with a specific configuration.
 #   enabled is for enabling of disabling Clients' Kubernetes object.
 #   count is for defining number of Clients.
+#   countPerPod is for defining number of Clients per pod. Final number of clients in a group is count times
+#   countPerPod.
 #   upstreamBoosterHostname is for defining hostname of an upstream used by Clients.
 clientsConfiguration:
   - name: with-server
     enabled: true
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname:
   - name: with-chained-1
     enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained1BoosterConfigurationName
   - name: with-chained-2
     enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained2BoosterConfigurationName
   - name: with-chained-3
     enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained3BoosterConfigurationName
