@@ -18,12 +18,15 @@ spec:
                 app: {{ $.Values.environmentName }}-client-{{ .name }}
         spec:
             containers:
-                - name: fwclient
+# Once nested range is entered, context from the outer one seems to be lost hence defining a variable that will allow
+# accessing upstream booster hostname.
+{{- $upstreamBoosterHostnameVariable := .upstreamBoosterHostname -}}
+{{- range $i := until (int .countPerPod) }}
+                - name: fwclient-{{ $i }}
                   image: "filewave/fwcld:{{ $.Values.clientVersion }}"
                   resources:
                       requests:
-                          cpu: "20m"
-                          memory: "20Mi"
+                          cpu: "5m"
                   env:
                       - name: "FILEWAVE_SERVER_HOST"
                         value: "{{ $.Values.serverHostname }}"
@@ -31,13 +34,19 @@ spec:
                         value: "20015"
                       - name: "FWCLD_SERVER_PUB_PORT"
                         value: "20005"
-                      - name: "FWCLD_CLIENT_NAME"
+                      # Template engine cannot combine metadata.name and $i variable directly.
+                      # POD_NAME will be evaluated during in runtime to form FWCLD_CLIENT_NAME.
+                      - name: "MY_POD_NAME"
                         valueFrom:
                             fieldRef:
                                 fieldPath: metadata.name
-{{- if .upstreamBoosterHostname }}
+                      - name: "FWCLD_CLIENT_NAME"
+                        value: "$(MY_POD_NAME)-{{ $i }}"
+                      - name: "FILEWAVE_INSIDE_DOCKER_VERSION"
+                        value: "true"
+{{- if $upstreamBoosterHostnameVariable }}
                       - name: "FWCLD_BOOSTER1_HOST"
-                        value: "{{ $.Values.environmentName }}-booster-{{ .upstreamBoosterHostname }}-svc"
+                        value: "{{ $.Values.environmentName }}-booster-{{ $upstreamBoosterHostnameVariable }}-svc"
                       - name: "FWCLD_BOOSTER1_PORT"
                         value: "20013"
                       - name: "FWCLD_BOOSTER1_PUB_PORT"
@@ -47,6 +56,7 @@ spec:
                       postStart:
                           exec:
                               command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
+{{- end }}
             imagePullSecrets:
                 - name: regcred
 {{- end }}

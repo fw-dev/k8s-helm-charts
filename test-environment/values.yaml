@@ -55,19 +55,19 @@ boostersConfiguration:
     upstreamPort: 20015
     hasPublicIpAddressForDebug: false
   - name: &chained1BoosterConfigurationName chained-1
-    enabled: true
+    enabled: false
     serviceEnabled: true
     upstreamHostname: *serverHostname
     upstreamPort: 20015
     hasPublicIpAddressForDebug: false
   - name: &chained2BoosterConfigurationName chained-2
-    enabled: true
+    enabled: false
     serviceEnabled: true
     upstreamHostname: te-marcins-booster-chained-1-svc      # Service prefix must be in sync with "environmentName".
     upstreamPort: 20013
     hasPublicIpAddressForDebug: false
   - name: &chained3BoosterConfigurationName chained-3
-    enabled: true
+    enabled: false
     serviceEnabled: true
     upstreamHostname: te-marcins-booster-chained-2-svc      # Service prefix must be in sync with "environmentName".
     upstreamPort: 20013
@@ -83,21 +83,27 @@ clientVersion: 14.0.0
 # - name is for defining name for group of Clients with a specific configuration.
 #   enabled is for enabling of disabling Clients' Kubernetes object.
 #   count is for defining number of Clients.
+#   countPerPod is for defining number of Clients per pod. Final number of clients in a group is count times
+#   countPerPod.
 #   upstreamBoosterHostname is for defining hostname of an upstream used by Clients.
 clientsConfiguration:
   - name: with-server
     enabled: true
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname:
   - name: with-chained-1
-    enabled: true
+    enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained1BoosterConfigurationName
   - name: with-chained-2
-    enabled: true
+    enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained2BoosterConfigurationName
   - name: with-chained-3
-    enabled: true
+    enabled: false
     count: 1
+    countPerPod: 1
     upstreamBoosterHostname: *chained3BoosterConfigurationName
