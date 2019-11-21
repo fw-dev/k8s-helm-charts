@@ -42,6 +42,8 @@ spec:
                                 fieldPath: metadata.name
                       - name: "FWCLD_CLIENT_NAME"
                         value: "$(MY_POD_NAME)-{{ $i }}"
+                      - name: "FWCLD_DEBUG_LEVEL"
+                        value: "101"
                       - name: "FILEWAVE_INSIDE_DOCKER_VERSION"
                         value: "true"
 {{- if $upstreamBoosterHostnameVariable }}
