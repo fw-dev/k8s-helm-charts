@@ -26,6 +26,11 @@ serverMemoryGi: 4
 # serverStorageGi is for defining how much disk space Server will request.
 serverStorageGi: 6
 
+# serverSoftwareUpdateProcessEnabled is for enabling or disabling fwsu process.
+# To be more precise, it's not enabling or disabling fwsu but alters lists of servers fwsu will query for software
+# updates. If lists are empty then fwsu has nothing to do.
+serverSoftwareUpdateProcessEnabled: false
+
 # --- Boosters Configuration ---
 
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's

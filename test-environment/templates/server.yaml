@@ -80,6 +80,10 @@ spec:
                         subPath: scripts
                       - mountPath: "/tmp/secret"
                         name: cert-secret
+{{- if not .Values.serverSoftwareUpdateProcessEnabled }}
+                      - mountPath: "/root/.config/filewave/"
+                        name: disable-fwsu-server-settings
+{{- end }}
 
                   ports:
                       - containerPort: 443
@@ -111,6 +115,12 @@ spec:
                           - key: tls.crt
                             path: server.crt
                             mode: 0664
+{{- if not .Values.serverSoftwareUpdateProcessEnabled }}
+                - name: disable-fwsu-server-settings
+                  configMap:
+                    name: {{ .Values.environmentName }}-disable-fwsu-server-settings
+                    defaultMode: 0666
+{{- end }}
             imagePullSecrets:
                 - name: regcred
 {{- end }}

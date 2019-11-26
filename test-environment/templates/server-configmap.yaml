@@ -1,0 +1,11 @@
+{{- if not .Values.serverSoftwareUpdateProcessEnabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.environmentName }}-disable-fwsu-server-settings
+data:
+  fwxserver.conf: |
+    [General]
+    AppleSUCatalogURL=@Invalid()
+    MSSUCatalogURL=@Invalid()
+{{- end }}
