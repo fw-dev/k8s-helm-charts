@@ -8,7 +8,7 @@ spec:
     volumeMode: Filesystem
     resources:
         requests:
-            storage: {{ .Values.serverStorageGi }}Gi
+            storage: {{ .Values.serverStorage }}
     storageClassName: standard
 
 ---
@@ -23,5 +23,5 @@ spec:
     volumeMode: Filesystem
     resources:
         requests:
-            storage: {{ .Values.serverStorageGi }}Gi
+            storage: {{ .Values.serverStorage }}
     storageClassName: standard                                 # standard instead of ssd on purpose for now

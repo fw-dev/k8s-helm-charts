@@ -23,7 +23,8 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: "500Mi"
+                          cpu: {{ $.Values.boosterCpu }}
+                          memory: {{ $.Values.boosterMemory }}
                   env:
                       - name: "FILEWAVE_SERVER_HOST"
                         value: {{ $.Values.serverHostname | quote }}

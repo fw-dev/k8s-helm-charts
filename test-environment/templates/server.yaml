@@ -21,8 +21,8 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          cpu: "1500m"
-                          memory: "{{ .Values.serverMemoryGi }}Gi"
+                          cpu: {{ .Values.serverCpu }}
+                          memory: {{ .Values.serverMemory }}
                   lifecycle:
                       postStart:
                           exec:
