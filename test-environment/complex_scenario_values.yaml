@@ -1,0 +1,134 @@
+# --- General ---
+
+# environmentName is for defining a prefix that will be used to name objects deployed to Kubernetes.
+environmentName: te-marcins
+
+# --- Server Configuration ---
+
+# serverEnabled is for enabling or disabling Server's Kubernetes object.
+serverEnabled: true
+
+# serverServiceEnabled is for enabling or disabling Server's Kubernetes Service object. Disabling Service will
+# effectively break all incoming communication.
+serverServiceEnabled: true
+
+# serverHostname is for defining a hostname all components in the system (Server's internal ones, Boosters, Clients,
+# Admins) must use to communicate with the Server.
+serverHostname: &serverHostname test-environment.filewave.ch
+
+# serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
+# image.
+serverVersion: 14.0.0
+
+# serverCpu is for defining how much CPU Server will request.
+serverCpu: 1500m
+
+# serverMemory is for defining how much memory Server will request.
+serverMemory: 4Gi
+
+# serverStorage is for defining how much disk space Server will request.
+serverStorage: 6Gi
+
+# serverSoftwareUpdateProcessEnabled is for enabling or disabling fwsu process.
+# To be more precise, it's not enabling or disabling fwsu but alters lists of servers fwsu will query for software
+# updates. If lists are empty then fwsu has nothing to do.
+serverSoftwareUpdateProcessEnabled: false
+
+# --- Boosters Configuration ---
+
+# boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
+# image.
+boosterVersion: 14.0.0
+
+# boosterCpu is for defining how much CPU Booster will request.
+boosterCpu: 500m
+
+# boosterMemory is for defining how much memory Booster will request.
+boosterMemory: 2Gi
+
+# boostersConfiguration is a list of dictionaries that define Boosters which will be deployed to Kubernetes.
+# - name is for defining Booster's name.
+#   enabled is for enabling or disabling Booster's Kubernetes object.
+#   serviceEnabled is for enabling or disabling Booster's Kubernetes Service object. Disabling Service will
+#   effectively break all incoming communication.
+#   hasPublicIpAddressForDebug is for enabling getting public IP address for a Booster. For debug purposes.
+#   extraEnv is for defining additional environment variables that will be passed to a Booster. The container may use
+#     environment variables for configuration. For full list of supported variables refer to:
+#     https://github.com/fw-dev/fw-docker/blob/master/images/fwbooster/configure-booster.sh
+boostersConfiguration:
+  - name: &chained1BoosterConfigurationName chained-1
+    enabled: true
+    serviceEnabled: true
+    hasPublicIpAddressForDebug: false
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
+  - name: &chained2BoosterConfigurationName chained-2
+    enabled: true
+    serviceEnabled: true
+    hasPublicIpAddressForDebug: false
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20013"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *chained1BoosterConfigurationName
+  - name: &chained3BoosterConfigurationName chained-3
+    enabled: true
+    serviceEnabled: true
+    hasPublicIpAddressForDebug: false
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20013"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *chained2BoosterConfigurationName
+      FILEWAVE_BOOSTER_SERVER2_PORT: "20013"
+      FILEWAVE_BOOSTER_SERVER2_HOST: *chained1BoosterConfigurationName
+
+# --- Clients Configuration ---
+
+# clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
+# image.
+clientVersion: 14.0.0
+
+# clientCpu is for defining how much CPU Booster will request.
+clientCpu: 5m
+
+# clientMemory is for defining how much memory Booster will request.
+clientMemory: 40Mi
+
+# clientsConfiguration is a list of dictionaries that define Clients which will be deployed to Kubernetes.
+# - name is for defining name for group of Clients with a specific configuration.
+#   enabled is for enabling of disabling Clients' Kubernetes object.
+#   count is for defining number of Clients.
+#   countPerPod is for defining number of Clients per pod. Final number of clients in a group is count times
+#   countPerPod.
+#   extraEnv is for defining additional environment variables that will be passed to a Client. The container may use
+#     environment variables for configuration. For full list of supported variables refer to:
+#     https://github.com/fw-dev/fw-docker/blob/master/images/fwcld/docker-entrypoint.sh
+clientsConfiguration:
+  - name: with-server
+    enabled: true
+    count: 5
+    countPerPod: 1
+    extraEnv: {}
+  - name: with-chained-1
+    enabled: true
+    count: 5
+    countPerPod: 1
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"
+  - name: with-chained-2
+    enabled: true
+    count: 5
+    countPerPod: 1
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained2BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"
+  - name: with-chained-3
+    enabled: true
+    count: 5
+    countPerPod: 1
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained3BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"
+
