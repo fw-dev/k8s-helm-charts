@@ -1,27 +1,27 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-    name: {{ .Values.environmentName }}-standard-pvc
+  name: {{ .Values.environmentName }}-standard-pvc
 spec:
-    accessModes:
-        - ReadWriteOnce
-    volumeMode: Filesystem
-    resources:
-        requests:
-            storage: {{ .Values.serverStorage }}
-    storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.serverStorage }}
+  storageClassName: standard
 
 ---
 
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-    name: {{ .Values.environmentName }}-ssd-pvc
+  name: {{ .Values.environmentName }}-ssd-pvc
 spec:
-    accessModes:
-        - ReadWriteOnce
-    volumeMode: Filesystem
-    resources:
-        requests:
-            storage: {{ .Values.serverStorage }}
-    storageClassName: standard                                 # standard instead of ssd on purpose for now
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.serverStorage }}
+  storageClassName: standard                                 # standard instead of ssd on purpose for now

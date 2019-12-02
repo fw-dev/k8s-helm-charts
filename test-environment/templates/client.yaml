@@ -4,63 +4,63 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-    name: {{ $.Values.environmentName }}-client-{{ .name }}
-    labels:
-        app: {{ $.Values.environmentName }}-client-{{ .name }}
+  name: {{ $.Values.environmentName }}-client-{{ .name }}
+  labels:
+    app: {{ $.Values.environmentName }}-client-{{ .name }}
 spec:
-    replicas: {{ .count }}
-    selector:
-        matchLabels:
-            app: {{ $.Values.environmentName }}-client-{{ .name }}
-    template:
-        metadata:
-            labels:
-                app: {{ $.Values.environmentName }}-client-{{ .name }}
-        spec:
-            containers:
+  replicas: {{ .count }}
+  selector:
+    matchLabels:
+      app: {{ $.Values.environmentName }}-client-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.environmentName }}-client-{{ .name }}
+    spec:
+      containers:
 # Once nested range is entered, context from the outer one seems to be lost hence defining a variable that will allow
 # accessing upstream booster hostname.
 {{- $upstreamBoosterHostnameVariable := .upstreamBoosterHostname -}}
 {{- range $i := until (int .countPerPod) }}
-                - name: fwclient-{{ $i }}
-                  image: "filewave/fwcld:{{ $.Values.clientVersion }}"
-                  resources:
-                      requests:
-                          cpu: {{ $.Values.clientCpu }}
-                          memory: {{ $.Values.clientMemory }}
-                  env:
-                      - name: "FILEWAVE_SERVER_HOST"
-                        value: "{{ $.Values.serverHostname }}"
-                      - name: "FWCLD_SERVER_PORT"
-                        value: "20015"
-                      - name: "FWCLD_SERVER_PUB_PORT"
-                        value: "20005"
-                      # Template engine cannot combine metadata.name and $i variable directly.
-                      # POD_NAME will be evaluated during in runtime to form FWCLD_CLIENT_NAME.
-                      - name: "MY_POD_NAME"
-                        valueFrom:
-                            fieldRef:
-                                fieldPath: metadata.name
-                      - name: "FWCLD_CLIENT_NAME"
-                        value: "$(MY_POD_NAME)-{{ $i }}"
-                      - name: "FWCLD_DEBUG_LEVEL"
-                        value: "101"
-                      - name: "FILEWAVE_INSIDE_DOCKER_VERSION"
-                        value: "true"
+        - name: fwclient-{{ $i }}
+          image: "filewave/fwcld:{{ $.Values.clientVersion }}"
+          resources:
+            requests:
+              cpu: {{ $.Values.clientCpu }}
+              memory: {{ $.Values.clientMemory }}
+          env:
+            - name: "FILEWAVE_SERVER_HOST"
+              value: "{{ $.Values.serverHostname }}"
+            - name: "FWCLD_SERVER_PORT"
+              value: "20015"
+            - name: "FWCLD_SERVER_PUB_PORT"
+              value: "20005"
+            # Template engine cannot combine metadata.name and $i variable directly.
+            # POD_NAME will be evaluated during in runtime to form FWCLD_CLIENT_NAME.
+            - name: "MY_POD_NAME"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: "FWCLD_CLIENT_NAME"
+              value: "$(MY_POD_NAME)-{{ $i }}"
+            - name: "FWCLD_DEBUG_LEVEL"
+              value: "101"
+            - name: "FILEWAVE_INSIDE_DOCKER_VERSION"
+              value: "true"
 {{- if $upstreamBoosterHostnameVariable }}
-                      - name: "FWCLD_BOOSTER1_HOST"
-                        value: "{{ $.Values.environmentName }}-booster-{{ $upstreamBoosterHostnameVariable }}-svc"
-                      - name: "FWCLD_BOOSTER1_PORT"
-                        value: "20013"
-                      - name: "FWCLD_BOOSTER1_PUB_PORT"
-                        value: "20003"
+            - name: "FWCLD_BOOSTER1_HOST"
+              value: "{{ $.Values.environmentName }}-booster-{{ $upstreamBoosterHostnameVariable }}-svc"
+            - name: "FWCLD_BOOSTER1_PORT"
+              value: "20013"
+            - name: "FWCLD_BOOSTER1_PUB_PORT"
+              value: "20003"
 {{- end }}
-                  lifecycle:
-                      postStart:
-                          exec:
-                              command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
 {{- end }}
-            imagePullSecrets:
-                - name: regcred
+      imagePullSecrets:
+        - name: regcred
 {{- end }}
 {{- end }}

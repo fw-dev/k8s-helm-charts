@@ -4,48 +4,48 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-    name: {{ $.Values.environmentName }}-booster-{{ .name }}
-    labels:
-        app: {{ $.Values.environmentName }}-booster-{{ .name }}
+  name: {{ $.Values.environmentName }}-booster-{{ .name }}
+  labels:
+    app: {{ $.Values.environmentName }}-booster-{{ .name }}
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: {{ $.Values.environmentName }}-booster-{{ .name }}
-    template:
-        metadata:
-            labels:
-                app: {{ $.Values.environmentName }}-booster-{{ .name }}
-        spec:
-            containers:
-                - name: fwbooster
-                  image: "filewave/fwbooster:{{ $.Values.boosterVersion }}"
-                  imagePullPolicy: Always
-                  resources:
-                      requests:
-                          cpu: {{ $.Values.boosterCpu }}
-                          memory: {{ $.Values.boosterMemory }}
-                  env:
-                      - name: "FILEWAVE_SERVER_HOST"
-                        value: {{ $.Values.serverHostname | quote }}
-                      - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
-                        value: {{ .upstreamPort | quote }}
-                      - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
-                        value: {{ .upstreamHostname | quote }}
-                      - name: "FWBOOSTER_NAME"
-                        valueFrom:
-                            fieldRef:
-                                fieldPath: metadata.name
-                  ports:
-                      - containerPort: 20003
-                      - containerPort: 20004
-                      - containerPort: 20013
-                      - containerPort: 20014
-                  lifecycle:
-                      postStart:
-                          exec:
-                              command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
-            imagePullSecrets:
-                - name: regcred
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ $.Values.environmentName }}-booster-{{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $.Values.environmentName }}-booster-{{ .name }}
+    spec:
+      containers:
+        - name: fwbooster
+          image: "filewave/fwbooster:{{ $.Values.boosterVersion }}"
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: {{ $.Values.boosterCpu }}
+              memory: {{ $.Values.boosterMemory }}
+          env:
+            - name: "FILEWAVE_SERVER_HOST"
+              value: {{ $.Values.serverHostname | quote }}
+            - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
+              value: {{ .upstreamPort | quote }}
+            - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
+              value: {{ .upstreamHostname | quote }}
+            - name: "FWBOOSTER_NAME"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 20003
+            - containerPort: 20004
+            - containerPort: 20013
+            - containerPort: 20014
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-svc | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{ $.Values.serverHostname }}\" >> /etc/hosts"]
+      imagePullSecrets:
+        - name: regcred
 {{- end }}
 {{- end }}

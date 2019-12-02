@@ -4,31 +4,31 @@
 kind: Service
 apiVersion: v1
 metadata:
-    name: {{ $.Values.environmentName }}-booster-{{ .name }}-svc
+  name: {{ $.Values.environmentName }}-booster-{{ .name }}-svc
 spec:
 {{- if .hasPublicIpAddressForDebug }}
-    type: LoadBalancer
+  type: LoadBalancer
 {{- else }}
-    type: ClusterIP
+  type: ClusterIP
 {{- end }}
-    ports:
-        - name: fwbooster-zmq-publish
-          protocol: TCP
-          port: 20003
-          targetPort: 20003
-        - name: fwbooster-zmq-router
-          protocol: TCP
-          port: 20004
-          targetPort: 20004
-        - name: fwbooster
-          protocol: TCP
-          port: 20013
-          targetPort: 20013
-        - name: fwbooster-ssl
-          protocol: TCP
-          port: 20014
-          targetPort: 20014
-    selector:
-        app: {{ $.Values.environmentName }}-booster-{{ .name }}
+  ports:
+    - name: fwbooster-zmq-publish
+      protocol: TCP
+      port: 20003
+      targetPort: 20003
+    - name: fwbooster-zmq-router
+      protocol: TCP
+      port: 20004
+      targetPort: 20004
+    - name: fwbooster
+      protocol: TCP
+      port: 20013
+      targetPort: 20013
+    - name: fwbooster-ssl
+      protocol: TCP
+      port: 20014
+      targetPort: 20014
+  selector:
+    app: {{ $.Values.environmentName }}-booster-{{ .name }}
 {{- end }}
 {{- end }}
