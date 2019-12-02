@@ -56,35 +56,11 @@ boosterMemory: 2Gi
 #   upstreamPort is for defining port of an upstream used by a Booster.
 #   hasPublicIpAddressForDebug is for enabling getting public IP address for a Booster. For debug purposes.
 boostersConfiguration:
-  - name: &notChained1BoosterConfigurationName not-chained-1
-    enabled: false
-    serviceEnabled: true
-    upstreamHostname: *serverHostname
-    upstreamPort: 20015
-    hasPublicIpAddressForDebug: false
-  - name: &notChained2BoosterConfigurationName not-chained-2
-    enabled: false
-    serviceEnabled: true
-    upstreamHostname: *serverHostname
-    upstreamPort: 20015
-    hasPublicIpAddressForDebug: false
   - name: &chained1BoosterConfigurationName chained-1
     enabled: false
     serviceEnabled: true
     upstreamHostname: *serverHostname
     upstreamPort: 20015
-    hasPublicIpAddressForDebug: false
-  - name: &chained2BoosterConfigurationName chained-2
-    enabled: false
-    serviceEnabled: true
-    upstreamHostname: te-marcins-booster-chained-1-svc      # Service prefix must be in sync with "environmentName".
-    upstreamPort: 20013
-    hasPublicIpAddressForDebug: false
-  - name: &chained3BoosterConfigurationName chained-3
-    enabled: false
-    serviceEnabled: true
-    upstreamHostname: te-marcins-booster-chained-2-svc      # Service prefix must be in sync with "environmentName".
-    upstreamPort: 20013
     hasPublicIpAddressForDebug: false
 
 # --- Clients Configuration ---
@@ -117,13 +93,3 @@ clientsConfiguration:
     count: 1
     countPerPod: 1
     upstreamBoosterHostname: *chained1BoosterConfigurationName
-  - name: with-chained-2
-    enabled: false
-    count: 1
-    countPerPod: 1
-    upstreamBoosterHostname: *chained2BoosterConfigurationName
-  - name: with-chained-3
-    enabled: false
-    count: 1
-    countPerPod: 1
-    upstreamBoosterHostname: *chained3BoosterConfigurationName
