@@ -51,17 +51,18 @@ boosterMemory: 2Gi
 #   enabled is for enabling or disabling Booster's Kubernetes object.
 #   serviceEnabled is for enabling or disabling Booster's Kubernetes Service object. Disabling Service will
 #   effectively break all incoming communication.
-#   upstreamHostname is for defining hostname of an upstream used by a Booster. Due to limitations of YAML and
-#   values.yaml upstreamHostname must be manually kept in sync with environmentName.
-#   upstreamPort is for defining port of an upstream used by a Booster.
 #   hasPublicIpAddressForDebug is for enabling getting public IP address for a Booster. For debug purposes.
+#   extraEnv is for defining additional environment variables that will be passed to a Booster. The container may use
+#     environment variables for configuration. For full list of supported variables refer to:
+#     https://github.com/fw-dev/fw-docker/blob/master/images/fwbooster/configure-booster.sh
 boostersConfiguration:
   - name: &chained1BoosterConfigurationName chained-1
-    enabled: false
+    enabled: true
     serviceEnabled: true
-    upstreamHostname: *serverHostname
-    upstreamPort: 20015
     hasPublicIpAddressForDebug: false
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
 
 # --- Clients Configuration ---
 
@@ -81,15 +82,15 @@ clientMemory: 40Mi
 #   count is for defining number of Clients.
 #   countPerPod is for defining number of Clients per pod. Final number of clients in a group is count times
 #   countPerPod.
-#   upstreamBoosterHostname is for defining hostname of an upstream used by Clients.
+#   extraEnv is for defining additional environment variables that will be passed to a Client. The container may use
+#     environment variables for configuration. For full list of supported variables refer to:
+#     https://github.com/fw-dev/fw-docker/blob/master/images/fwcld/docker-entrypoint.sh
 clientsConfiguration:
-  - name: with-server
+  - name: with-chained-1
     enabled: true
     count: 1
     countPerPod: 1
-    upstreamBoosterHostname:
-  - name: with-chained-1
-    enabled: false
-    count: 1
-    countPerPod: 1
-    upstreamBoosterHostname: *chained1BoosterConfigurationName
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"

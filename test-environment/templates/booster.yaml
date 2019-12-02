@@ -28,14 +28,29 @@ spec:
           env:
             - name: "FILEWAVE_SERVER_HOST"
               value: {{ $.Values.serverHostname | quote }}
-            - name: "FILEWAVE_BOOSTER_SERVER1_PORT"
-              value: {{ .upstreamPort | quote }}
-            - name: "FILEWAVE_BOOSTER_SERVER1_HOST"
-              value: {{ .upstreamHostname | quote }}
             - name: "FWBOOSTER_NAME"
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+{{- if .extraEnv }}
+{{- range $key, $value := .extraEnv }}
+            - name: {{ $key | quote }}
+{{- /*
+Due to specifics of how Booster interprets upstream addresses there is a little bit of processing here.
+If an upstream is a Server, it must be specified with the actual hostname that is used for Server's address
+(FILEWAVE_SERVER_HOST). Why? If these are different then the Booster would think that configured upstream is
+another Booster.
+If an upstream is a Booster, it must be specified with the Booster's service name.
+Reason for logic being placed here is that templating doesn't work in Values file. The idea is to make it
+convenient in Values to specify just a Booster's name and everything will be taken care of under the hood.
+*/ -}}
+{{- if and (regexMatch "FILEWAVE_BOOSTER_SERVER[0-9]+_HOST" $key) (not (eq $value $.Values.serverHostname)) }}
+              value: {{ $.Values.environmentName }}-booster-{{ $value }}-svc
+{{- else }}
+              value: {{ $value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
           ports:
             - containerPort: 20003
             - containerPort: 20004
