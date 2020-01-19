@@ -28,6 +28,10 @@ spec:
       protocol: TCP
       port: 20014
       targetPort: 20014
+      - name: fwbooster-booster
+      protocol: TCP
+      port: 20024
+      targetPort: 20024
   selector:
     app: {{ $.Values.environmentName }}-booster-{{ .name }}
 {{- end }}
