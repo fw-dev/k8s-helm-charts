@@ -28,7 +28,7 @@ spec:
       protocol: TCP
       port: 20014
       targetPort: 20014
-      - name: fwbooster-booster
+    - name: fwbooster-booster
       protocol: TCP
       port: 20024
       targetPort: 20024
