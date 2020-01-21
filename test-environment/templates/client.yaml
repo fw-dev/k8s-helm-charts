@@ -19,11 +19,12 @@ spec:
     spec:
       containers:
 # Once nested range is entered, context from the outer one seems to be lost hence defining a variable that will allow
-# accessing extraEnv data.
+# accessing data.
 {{- $extraEnvVariable := .extraEnv -}}
+{{- $clientVersionVariable := .clientVersion -}}
 {{- range $i := until (int .countPerPod) }}
         - name: fwclient-{{ $i }}
-          image: "filewave/fwcld:{{ $.Values.clientVersion }}"
+          image: "filewave/fwcld:{{ $clientVersionVariable }}"
           resources:
             requests:
               cpu: {{ $.Values.clientCpu }}

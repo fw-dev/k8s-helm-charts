@@ -37,8 +37,8 @@ serverSoftwareUpdateProcessEnabled: false
 # --- Boosters Configuration ---
 
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
-# image.
-boosterVersion: 14.0.0
+# image. For each booster, you can define this separately.
+# boosterVersion: 14.0.0
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -60,15 +60,24 @@ boostersConfiguration:
     enabled: true
     serviceEnabled: true
     hasPublicIpAddressForDebug: false
+    boosterVersion: 14.0.0
     extraEnv:
       FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
       FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
-
+  - name: &chained2BoosterConfigurationName chained-2
+    enabled: true
+    serviceEnabled: true
+    hasPublicIpAddressForDebug: false
+    boosterVersion: "202001160525.b48c9814"
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
+  
 # --- Clients Configuration ---
 
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
-# image.
-clientVersion: 14.0.0
+# image. For each client group, you can define this separately.
+# clientVersion: 14.0.0
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
@@ -88,9 +97,20 @@ clientMemory: 40Mi
 clientsConfiguration:
   - name: with-chained-1
     enabled: true
+    clientVersion: 14.0.0
     count: 1
     countPerPod: 1
     extraEnv:
       FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
       FWCLD_BOOSTER1_PORT: "20013"
       FWCLD_BOOSTER1_PUB_PORT: "20003"
+  - name: with-chained-2
+    enabled: true
+    clientVersion: "202001200616.fd5bdcde"
+    count: 1
+    countPerPod: 1
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained2BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"
+  
