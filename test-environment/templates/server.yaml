@@ -92,7 +92,7 @@ spec:
             - containerPort: 20015
             - containerPort: 20016
             - containerPort: 20017
-            - containerPort: 20027
+            - containerPort: 20019
             - containerPort: 20030
             - containerPort: 20443
             - containerPort: 20445

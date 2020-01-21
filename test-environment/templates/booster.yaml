@@ -56,7 +56,7 @@ convenient in Values to specify just a Booster's name and everything will be tak
             - containerPort: 20004
             - containerPort: 20013
             - containerPort: 20014
-            - containerPort: 20024
+            - containerPort: 20018
           lifecycle:
             postStart:
               exec:
