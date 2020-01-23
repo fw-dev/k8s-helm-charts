@@ -24,7 +24,11 @@ spec:
 {{- $clientVersionVariable := .clientVersion -}}
 {{- range $i := until (int .countPerPod) }}
         - name: fwclient-{{ $i }}
+{{- if $clientVersionVariable }}
           image: "filewave/fwcld:{{ $clientVersionVariable }}"
+{{- else if $.Values.defaultClientVersion }}
+          image: "filewave/fwcld:{{ $.Values.defaultClientVersion }}"
+{{- end }}
           resources:
             requests:
               cpu: {{ $.Values.clientCpu }}

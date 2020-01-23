@@ -19,7 +19,11 @@ spec:
     spec:
       containers:
         - name: fwbooster
-          image: "filewave/fwbooster:{{ .boosterVersion }}"
+{{- if .boosterVersion }}
+          image: filewave/fwbooster:{{ .boosterVersion }}
+{{- else if $.Values.defaultBoosterVersion }}
+          image: filewave/fwbooster:{{ $.Values.defaultBoosterVersion }}
+{{- end }}      
           imagePullPolicy: Always
           resources:
             requests:
