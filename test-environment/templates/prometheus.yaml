@@ -24,3 +24,7 @@ spec:
               memory: {{ .Values.prometheusMemory }}
           ports:
               - containerPort: 9090
+          lifecycle:
+            postStart:
+                exec:
+                    command: ["/bin/sh", "-c", "echo \"$(nslookup {{ $.Values.environmentName }}-server-scv | grep \"Name\" -A1 | grep \"Address\" | cut -d' ' -f2) {{$.Values.serverHostname }}\" >> /etc/hosts"]

@@ -50,6 +50,14 @@ spec:
       protocol: TCP
       port: 20448
 
+    - name: prom
+      protocol: TCP
+      port: 21102
+    
+    - name: prom2
+      protocol: TCP
+      port: 21103
+
   selector:
     app: {{ .Values.environmentName }}-server
 {{- end }}

@@ -97,6 +97,8 @@ spec:
             - containerPort: 20445
             - containerPort: 20446
             - containerPort: 20448
+            - containerPort: 21102
+            - containerPort: 21103
       volumes:
         - name: standard-vol-{{ .Release.Name }}
           persistentVolumeClaim:
