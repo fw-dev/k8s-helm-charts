@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.environmentName }}-prometheus
+  labels:
+    app: {{ .Values.environmentName }}-prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.environmentName }}-prometheus
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.environmentName }}-prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: "prom/prometheus"
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: {{ .Values.prometheusCpu }}
+              memory: {{ .Values.prometheusMemory }}
+          ports:
+              - containerPort: 9090

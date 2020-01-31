@@ -1,7 +1,7 @@
 # --- General ---
 
 # environmentName is for defining a prefix that will be used to name objects deployed to Kubernetes.
-environmentName: te-marcins
+environmentName: te-hamids
 
 # --- Server Configuration ---
 
@@ -18,16 +18,24 @@ serverHostname: &serverHostname test-environment.filewave.ch
 
 # serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
 # image.
-serverVersion: 14.0.0
+serverVersion: 202001200609.fd5bdcde
+
 
 # serverCpu is for defining how much CPU Server will request.
-serverCpu: 1500m
+serverCpu: 1000m
 
 # serverMemory is for defining how much memory Server will request.
 serverMemory: 4Gi
 
 # serverStorage is for defining how much disk space Server will request.
 serverStorage: 6Gi
+
+
+# prometheusCpu is for defining how much CPU prometheus will request.
+prometheusCpu: 500m
+
+# premetheusMemory is for defining how much memory premetheus will request.
+prometheusMemory: 1Gi
 
 # serverSoftwareUpdateProcessEnabled is for enabling or disabling fwsu process.
 # To be more precise, it's not enabling or disabling fwsu but alters lists of servers fwsu will query for software
@@ -38,7 +46,7 @@ serverSoftwareUpdateProcessEnabled: false
 
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
 # image.
-boosterVersion: 14.0.0
+boosterVersion: 202001200613.fd5bdcde
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -68,7 +76,7 @@ boostersConfiguration:
 
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
 # image.
-clientVersion: 14.0.0
+clientVersion: 202001200616.fd5bdcde
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
@@ -88,9 +96,13 @@ clientMemory: 40Mi
 clientsConfiguration:
   - name: with-chained-1
     enabled: true
-    count: 1
-    countPerPod: 1
+    count: 8
+    countPerPod: 4
     extraEnv:
       FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
       FWCLD_BOOSTER1_PORT: "20013"
       FWCLD_BOOSTER1_PUB_PORT: "20003"
+  - name: with-server-1
+    enabled: true
+    count: 20
+    countPerPod: 4
