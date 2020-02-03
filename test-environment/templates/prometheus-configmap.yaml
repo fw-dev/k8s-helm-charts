@@ -1,0 +1,17 @@
+{{- if .Values.prometheus.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:  {{ .Values.prometheus.name }}-settings
+data:
+  prometheus.yml: |
+    job_name: 'filewave-server'
+    metrics_path: /metrics
+    params:
+      module: [http_2xx]
+    static_configs:
+      targets:
+        - http://*serverHostname:21102
+        - http://*serverHostname:21103
+
+{{- end -}}
