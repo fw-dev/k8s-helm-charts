@@ -9,7 +9,8 @@ spec:
     - name: prom-port
       protocol: TCP
       port: 9090
+      targetPort: 9090
 
   selector:
-    app: {{ .Values.prometheus.name }}-server
+    app: {{ .Values.environmentName }}-prometheus
 {{- end }}

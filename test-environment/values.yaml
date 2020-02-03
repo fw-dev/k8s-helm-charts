@@ -101,10 +101,8 @@ prometheus:
   ## Prometheus server container name
   ##
   enabled: true
-  serviceEnabled: false
+  serviceEnabled: true
   name: prometheus-server
-  sidecarContainers:
-
   ## Prometheus server container image
   ##
   image:
@@ -113,4 +111,5 @@ prometheus:
     pullPolicy: IfNotPresent
 
 prometheusCpu: 500m
-prometheusMemory: 1Gi
+prometheusMemory: 2Gi
+prometheusStorage: 2Gi
