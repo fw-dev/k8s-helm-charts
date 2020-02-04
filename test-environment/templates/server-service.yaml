@@ -53,10 +53,12 @@ spec:
     - name: prom
       protocol: TCP
       port: 21102
+      targetPort: 21102
     
     - name: prom2
       protocol: TCP
       port: 21103
+      targetPort: 21103
 
   selector:
     app: {{ .Values.environmentName }}-server
