@@ -30,6 +30,10 @@ spec:
       protocol: TCP
       port: 20017
 
+    - name: fwserver-s-booster
+      protocol: TCP
+      port: 20019
+
     - name: vnc-relay
       port: 20030
       protocol: TCP

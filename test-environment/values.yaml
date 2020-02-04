@@ -18,8 +18,7 @@ serverHostname: &serverHostname test-environment.filewave.ch
 
 # serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
 # image.
-serverVersion: "202001311142.704eea3a"
-
+serverVersion: "202002040736.95bf8635"
 
 # serverCpu is for defining how much CPU Server will request.
 serverCpu: 1000m
@@ -38,8 +37,9 @@ serverSoftwareUpdateProcessEnabled: false
 # --- Boosters Configuration ---
 
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
-# image.
-boosterVersion: "202001311145.704eea3a"
+# image. For each booster, you can define this separately, but if you dont define for any of them
+# following value will be used as a default
+defaultBoosterVersion: "202002040739.95bf8635"
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -61,15 +61,27 @@ boostersConfiguration:
     enabled: true
     serviceEnabled: true
     hasPublicIpAddressForDebug: false
+#   If you wish you overwrite the defaultBoosterVersion value by commenting out following    
+#    boosterVersion: 14.0.1
     extraEnv:
       FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
       FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
-
+  - name: &chained2BoosterConfigurationName chained-2
+    enabled: true
+    serviceEnabled: true
+    hasPublicIpAddressForDebug: false
+#   If you wish you overwrite the defaultBoosterVersion value by commenting out following    
+#    boosterVersion: 14.0.2
+    extraEnv:
+      FILEWAVE_BOOSTER_SERVER1_PORT: "20015"
+      FILEWAVE_BOOSTER_SERVER1_HOST: *serverHostname
+  
 # --- Clients Configuration ---
 
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
-# image.
-clientVersion: "202001311148.704eea3a"
+# image. For each client group, you can define this separately, but if you dont define for any of them
+# following value will be used as a default
+defaultClientVersion: "202002040504.704eea3a"
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
@@ -89,12 +101,15 @@ clientMemory: 40Mi
 clientsConfiguration:
   - name: with-chained-1
     enabled: true
+#   If you wish you overwrite the defaultClientVersion value by commenting out following    
+#    clientVersion: 14.0.1
     count: 1
     countPerPod: 1
     extraEnv:
       FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
       FWCLD_BOOSTER1_PORT: "20013"
       FWCLD_BOOSTER1_PUB_PORT: "20003"
+
 
 
 prometheus:

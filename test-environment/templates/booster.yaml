@@ -19,7 +19,11 @@ spec:
     spec:
       containers:
         - name: fwbooster
-          image: "filewave/fwbooster:{{ $.Values.boosterVersion }}"
+{{- if .boosterVersion }}
+          image: filewave/fwbooster:{{ .boosterVersion }}
+{{- else if $.Values.defaultBoosterVersion }}
+          image: filewave/fwbooster:{{ $.Values.defaultBoosterVersion }}
+{{- end }}      
           imagePullPolicy: Always
           resources:
             requests:
@@ -56,6 +60,7 @@ convenient in Values to specify just a Booster's name and everything will be tak
             - containerPort: 20004
             - containerPort: 20013
             - containerPort: 20014
+            - containerPort: 20018
           lifecycle:
             postStart:
               exec:
