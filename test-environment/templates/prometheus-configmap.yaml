@@ -14,4 +14,7 @@ data:
         - targets: ['{{ $.Values.environmentName }}-server-svc.default.svc.cluster.local:21102', '{{ $.Values.environmentName }}-server-svc.default.svc.cluster.local:21103']
           labels:
             system: "fwserver"
+    - job_name: 'pushgateway-client'
+      static_configs:
+        - targets: ['localhost:9091']
 {{- end -}}

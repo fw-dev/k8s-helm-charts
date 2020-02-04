@@ -33,6 +33,15 @@ spec:
             - name: prometheus-vol-{{ .Release.Name }}
               mountPath: /data
               subPath: data
+        - name: push-gateway
+          image: prom/pushgateway
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: {{ .Values.prometheusCpu }}
+              memory: {{ .Values.prometheusMemory }}
+          ports:
+            - containerPort: 9091
       volumes:
         - name: prometheus-vol-{{ .Release.Name }}
           persistentVolumeClaim:
