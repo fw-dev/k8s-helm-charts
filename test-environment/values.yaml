@@ -1,7 +1,7 @@
 # --- General ---
 
 # environmentName is for defining a prefix that will be used to name objects deployed to Kubernetes.
-environmentName: te-hamids
+environmentName: te-marcins
 
 # --- Server Configuration ---
 
@@ -18,10 +18,10 @@ serverHostname: &serverHostname test-environment.filewave.ch
 
 # serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
 # image.
-serverVersion: "202002100333.10450b98"
+serverVersion: 14.0.0
 
 # serverCpu is for defining how much CPU Server will request.
-serverCpu: 1000m
+serverCpu: 1500m
 
 # serverMemory is for defining how much memory Server will request.
 serverMemory: 4Gi
@@ -39,7 +39,7 @@ serverSoftwareUpdateProcessEnabled: false
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
 # image. For each booster, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultBoosterVersion: "202002100338.10450b98"
+defaultBoosterVersion: 14.0.0
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -81,7 +81,7 @@ boostersConfiguration:
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
 # image. For each client group, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultClientVersion: "202002100341.10450b98"
+defaultClientVersion: 14.0.0
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
@@ -109,7 +109,16 @@ clientsConfiguration:
       FWCLD_BOOSTER1_HOST: *chained1BoosterConfigurationName
       FWCLD_BOOSTER1_PORT: "20013"
       FWCLD_BOOSTER1_PUB_PORT: "20003"
-
+  - name: with-chained-2
+    enabled: true
+#   If you wish you overwrite the defaultClientVersion value by commenting out following
+#    clientVersion: 14.0.2
+    count: 1
+    countPerPod: 1
+    extraEnv:
+      FWCLD_BOOSTER1_HOST: *chained2BoosterConfigurationName
+      FWCLD_BOOSTER1_PORT: "20013"
+      FWCLD_BOOSTER1_PUB_PORT: "20003"
 
 
 prometheus:
