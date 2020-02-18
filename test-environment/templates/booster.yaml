@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: "ENABLE_MONIORING"
+            - name: "ENABLE_MONITORING"
               value: "true"
 {{- if .extraEnv }}
 {{- range $key, $value := .extraEnv }}

@@ -52,7 +52,7 @@ spec:
               value: "101"
             - name: "FILEWAVE_INSIDE_DOCKER_VERSION"
               value: "true"
-            - name: "ENABLE_MONIORING"
+            - name: "ENABLE_MONITORING"
               value: "true"
             - name: "PUSHGATEWAY_HOST"
               value: "prometheus-server-server-svc.default.svc.cluster.local:9091"
