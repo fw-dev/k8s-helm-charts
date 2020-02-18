@@ -36,6 +36,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: "ENABLE_MONIORING"
+              value: "true"
 {{- if .extraEnv }}
 {{- range $key, $value := .extraEnv }}
             - name: {{ $key | quote }}
@@ -61,6 +63,7 @@ convenient in Values to specify just a Booster's name and everything will be tak
             - containerPort: 20013
             - containerPort: 20014
             - containerPort: 20018
+            - containerPort: 21104
           lifecycle:
             postStart:
               exec:

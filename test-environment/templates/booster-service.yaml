@@ -32,6 +32,10 @@ spec:
       protocol: TCP
       port: 20018
       targetPort: 20018
+    - name: prometheus-endpoint
+      protocol: TCP
+      port: 21104
+      targetPort: 21104
   selector:
     app: {{ $.Values.environmentName }}-booster-{{ .name }}
 {{- end }}

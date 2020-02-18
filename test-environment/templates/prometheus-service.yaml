@@ -13,6 +13,9 @@ spec:
     - name: pushgateway
       protocol: TCP
       port: 9091
+    # - name: grafana
+    #   protocol: TCP
+    #   port: 3000
 
   selector:
     app: {{ .Values.environmentName }}-prometheus

@@ -18,13 +18,17 @@ spec:
       containers:
         - name: prometheus
           image: "prom/prometheus"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           args: 
             - --config.file=/etc/config/prometheus.yml
           resources:
-            requests:
+            limits:
               cpu: {{ .Values.prometheusCpu }}
               memory: {{ .Values.prometheusMemory }}
+          readinessProbe:
+            httpGet:
+              port: 9090
+              scheme: HTTP
           ports:
               - containerPort: 9090
           volumeMounts:
@@ -35,13 +39,26 @@ spec:
               subPath: data
         - name: push-gateway
           image: prom/pushgateway
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              port: 9091
+              scheme: HTTP
           resources:
-            requests:
+            limits:
               cpu: {{ .Values.prometheusCpu }}
               memory: {{ .Values.prometheusMemory }}
           ports:
             - containerPort: 9091
+        # - name: grafana
+        #   image: grafana/grafana:6.6.0
+        #   imagePullPolicy: IfNotPresent
+        #   readinessProbe:
+        #     httpGet:
+        #       port: 3000
+        #       scheme: HTTP
+        #   ports:
+            - containerPort: 3000
       volumes:
         - name: prometheus-vol-{{ .Release.Name }}
           persistentVolumeClaim:

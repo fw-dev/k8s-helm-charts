@@ -18,11 +18,16 @@ data:
             system: "fwserver"
     - job_name: 'pushgateway-client'
       static_configs:
-        - targets: ['localhost:9091']
+        - targets: 
+          - localhost:9091
+          labels:
+            system: "fwcld"
     - job_name: 'booster'
       static_configs:
-        -targets:
+        - targets:
           {{- range .Values.boostersConfiguration }}
-          - {{ $.Values.environmentName }}-booster-{{ .name }}-svc.default.svc.cluster.local:21105  
+          - {{ $.Values.environmentName }}-booster-{{ .name }}-svc.default.svc.cluster.local:21104
           {{- end }}
+          labels:
+            system: "booster"
 {{- end -}}

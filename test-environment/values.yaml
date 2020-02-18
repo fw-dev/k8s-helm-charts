@@ -18,7 +18,7 @@ serverHostname: &serverHostname test-environment.filewave.ch
 
 # serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
 # image.
-serverVersion: "202002040736.95bf8635"
+serverVersion: "202002100333.10450b98"
 
 # serverCpu is for defining how much CPU Server will request.
 serverCpu: 1000m
@@ -39,7 +39,7 @@ serverSoftwareUpdateProcessEnabled: false
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
 # image. For each booster, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultBoosterVersion: "202002040739.95bf8635"
+defaultBoosterVersion: "202002100338.10450b98"
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -81,7 +81,7 @@ boostersConfiguration:
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
 # image. For each client group, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultClientVersion: "202002040504.704eea3a"
+defaultClientVersion: "202002100341.10450b98"
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
