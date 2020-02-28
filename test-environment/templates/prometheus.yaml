@@ -1,4 +1,4 @@
-{{- if .Values.prometheus.enabled -}}
+{{- if .Values.prometheusEnabled -}}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: "prom/prometheus"
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.prometheusImageRepository }}:{{ .Values.prometheusImageTag }}
+          imagePullPolicy: {{ .Values.prometheusImagePullPolicy }}
           args: 
             - --config.file=/etc/config/prometheus.yml
           resources:
@@ -37,35 +37,27 @@ spec:
             - name: prometheus-vol-{{ .Release.Name }}
               mountPath: /data
               subPath: data
-        - name: push-gateway
-          image: prom/pushgateway
-          imagePullPolicy: IfNotPresent
+        - name: pushgateway
+          image: {{ .Values.pushgatewayImageRepository }}:{{ .Values.pushgatewayImageTag }}
+          imagePullPolicy: {{ .Values.pushgatewayImagePullPolicy }}
           readinessProbe:
             httpGet:
               port: 9091
               scheme: HTTP
           resources:
             limits:
-              cpu: {{ .Values.prometheusCpu }}
-              memory: {{ .Values.prometheusMemory }}
+              cpu: {{ .Values.pushgatewayCpu }}
+              memory: {{ .Values.pushgatewayMemory }}
           ports:
             - containerPort: 9091
-        # - name: grafana
-        #   image: grafana/grafana:6.6.0
-        #   imagePullPolicy: IfNotPresent
-        #   readinessProbe:
-        #     httpGet:
-        #       port: 3000
-        #       scheme: HTTP
-        #   ports:
             - containerPort: 3000
       volumes:
         - name: prometheus-vol-{{ .Release.Name }}
           persistentVolumeClaim:
-            claimName: {{ .Values.prometheus.name }}-standard-pvc
+            claimName: {{ .Values.environmentName }}-prom-standard-pvc
         - name: config-vol
           configMap:
-            name: {{ .Values.prometheus.name }}-settings
+            name: {{ .Values.environmentName }}-prom-settings
             defaultMode: 0666
 
 

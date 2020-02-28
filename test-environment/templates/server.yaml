@@ -27,6 +27,9 @@ spec:
             postStart:
               exec:
                 command: ["/bin/sh", "-c", "echo 127.0.0.1 {{ .Values.serverHostname }} >> /etc/hosts && cp -rfL /tmp/secret/server.key /usr/local/filewave/certs/ && cp -rfL /tmp/secret/server.crt /usr/local/filewave/certs/"]
+          env:
+            - name: "ENABLE_MONITORING"
+              value: "true"
           readinessProbe:
             httpGet:
               path: /api/config/app

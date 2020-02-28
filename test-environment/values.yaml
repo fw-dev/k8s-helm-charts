@@ -18,7 +18,7 @@ serverHostname: &serverHostname test-environment.filewave.ch
 
 # serverVersion is for defining a tag in DockerHub filewave/fwserver repository that will be used to pull Server's
 # image.
-serverVersion: 14.0.0
+serverVersion: "202002100333.10450b98"
 
 # serverCpu is for defining how much CPU Server will request.
 serverCpu: 1500m
@@ -39,7 +39,7 @@ serverSoftwareUpdateProcessEnabled: false
 # boosterVersion is for defining a tag in DockerHub filewave/fwbooster repository that will be used to pull Booster's
 # image. For each booster, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultBoosterVersion: 14.0.0
+defaultBoosterVersion: "202002100338.10450b98"
 
 # boosterCpu is for defining how much CPU Booster will request.
 boosterCpu: 500m
@@ -81,7 +81,7 @@ boostersConfiguration:
 # clientVersion is for defining a tag in DockerHub filewave/fwcld repository that will be used to pull Client's
 # image. For each client group, you can define this separately, but if you dont define for any of them
 # following value will be used as a default
-defaultClientVersion: 14.0.0
+defaultClientVersion: "202002100341.10450b98"
 
 # clientCpu is for defining how much CPU Booster will request.
 clientCpu: 5m
@@ -120,20 +120,21 @@ clientsConfiguration:
       FWCLD_BOOSTER1_PORT: "20013"
       FWCLD_BOOSTER1_PUB_PORT: "20003"
 
-
-prometheus:
-  ## Prometheus server container name
-  ##
-  enabled: true
-  serviceEnabled: true
-  name: prometheus-server
-  ## Prometheus server container image
-  ##
-  image:
-    repository: prom/prometheus
-    tag: v2.15.2
-    pullPolicy: IfNotPresent
+prometheusEnabled: true
+prometheusServiceEnabled: true
+prometheusImageRepository: prom/prometheus
+prometheusImageTag: v2.15.2
+prometheusImagePullPolicy: IfNotPresent
 
 prometheusCpu: 500m
 prometheusMemory: 2Gi
 prometheusStorage: 2Gi
+
+pushgatewayImageRepository: prom/pushgateway
+pushgatewayImageTag: v1.1.0
+pushgatewayImagePullPolicy: IfNotPresent
+
+pushgatewayCpu: 500m
+pushgatewayMemory: 2Gi
+pushgatewayStorage: 2Gi
+

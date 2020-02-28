@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.prometheus.name }}-standard-pvc
+  name: {{ .Values.environmentName }}-prom-standard-pvc
 spec:
   accessModes:
     - ReadWriteOnce

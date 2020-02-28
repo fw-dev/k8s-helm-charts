@@ -55,7 +55,7 @@ spec:
             - name: "ENABLE_MONITORING"
               value: "true"
             - name: "PUSHGATEWAY_HOST"
-              value: "prometheus-server-server-svc.default.svc.cluster.local:9091"
+              value: "{{ $.Values.environmentName }}-prom-server-svc:9091"
 {{- if $extraEnvVariable }}
 {{- range $key, $value := $extraEnvVariable }}
             - name: {{ $key | quote }}
