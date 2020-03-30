@@ -71,6 +71,7 @@ spec:
         - name: fwserver
           image: "filewave/fwserver:{{ .Values.serverVersion }}"
           imagePullPolicy: Always
+          args: ["run"]
           resources:
             requests:
               cpu: {{ .Values.serverCpu }}
