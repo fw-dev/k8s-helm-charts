@@ -15,10 +15,63 @@ spec:
       labels:
         app: {{ .Values.environmentName }}-server
     spec:
+      initContainers:
+        - name: init
+          image: "filewave/fwserver:{{ .Values.serverVersion }}"
+          imagePullPolicy: Always
+          args: ["init"]
+          volumeMounts:
+            - mountPath: "/usr/local/filewave/fwxserver/DB"
+              name: ssd-vol-{{ .Release.Name }}
+              subPath: db
+            - mountPath: "/private/var/log/FWAdmin Audit"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: audit
+            - mountPath: "/usr/local/filewave/fwxserver/Data Folder"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: data-folder
+            - mountPath: "/usr/local/filewave/apache/conf"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: apache-conf
+            - mountPath: "/usr/local/filewave/apache/logs"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: apache-logs
+            - mountPath: "/usr/local/filewave/postgresql/conf"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: postgres-conf
+            - mountPath: "/usr/local/filewave/postgresql/log"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: postgres-log
+            - mountPath: "/usr/local/filewave/certs"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: certs
+            - mountPath: "/usr/local/filewave/fwcld"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: fwcld
+            - mountPath: "/usr/local/filewave/ipa"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: ipa
+            - mountPath: "/usr/local/filewave/log"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: log
+            - mountPath: "/usr/local/filewave/media"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: media
+            - mountPath: "/usr/local/filewave/tmp"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: tmp
+            - mountPath: "/usr/local/filewave/scripts"
+              name: standard-vol-{{ .Release.Name }}
+              subPath: scripts
+{{- if not .Values.serverSoftwareUpdateProcessEnabled }}
+            - mountPath: "/root/.config/filewave/"
+              name: disable-fwsu-server-settings
+{{- end }}
       containers:
         - name: fwserver
           image: "filewave/fwserver:{{ .Values.serverVersion }}"
           imagePullPolicy: Always
+          args: ["run"]
           resources:
             requests:
               cpu: {{ .Values.serverCpu }}
