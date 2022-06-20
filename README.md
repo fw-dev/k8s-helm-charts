@@ -1,1 +1,1 @@
-# :warning: Migrated to: https://gitlab.com/filewave/software/k8s-helm-charts
+# :warning: Migrated to: https://gitlab.com/fw-oss/k8s-helm-charts
